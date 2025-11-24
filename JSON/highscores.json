@@ -1,10 +1,20 @@
 {
-    "highscore": 12000,
+    "highscore": 490720,
     "history": [
+        {
+            "nickname": "zaoeh",
+            "score": 490720,
+            "level": 222
+        },
         {
             "nickname": "Dev",
             "score": 12000,
             "level": 35
+        },
+        {
+            "nickname": "zebi",
+            "score": 3900,
+            "level": 20
         },
         {
             "nickname": "Zizi",
@@ -40,16 +50,6 @@
             "nickname": "zaza",
             "score": 1200,
             "level": 11
-        },
-        {
-            "nickname": "noob",
-            "score": 900,
-            "level": 10
-        },
-        {
-            "nickname": "Testeurs fous",
-            "score": 660,
-            "level": 8
         }
     ]
 }
