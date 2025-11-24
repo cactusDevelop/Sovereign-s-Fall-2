@@ -1,32 +1,5 @@
-#  ____________________
-# /                    \
-# !     ATTENTION      !
-# !                    !
-# \____________________/
-#          !  !
-#          !  !               Code généré par IA, l'unique but de ce fichier
-#          L_ !               est de rendre le jeu plus agréable aux beta-testeurs
-#         / _)!               En aucun cas, ce fichier ne fait parti de l'évaluation.
-#        / /__L
-#  _____/ (____)              cfr [BALISE ONLINE HIGHSCORES] pour code associé
-#         (____)
-#  _____  (____)
-#       \_(____)
-#          !  !
-#          !  !
-#          \__/
-#
 
-
-"""
-Système de highscores en ligne via GitHub - VERSION SÉCURISÉE
-"""
-import time
-
-import requests
-import json
-import base64
-import os
+import requests, json, base64, os
 
 
 # CHARGEMENT SÉCURISÉ DE LA CONFIGURATION
