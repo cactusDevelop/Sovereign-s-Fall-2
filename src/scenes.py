@@ -19,7 +19,6 @@ green = "\033[1;32m"
 cyan = "\033[1;36m"
 blue = "\033[1;94m"
 
-#starters = generate_starters() A cause de random.seed()
 OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
 CHEAT_WEAPON = Weapon("Mange tes morts", 9999, 9999, 0, 0)
 
@@ -28,6 +27,8 @@ PLAYER_I_PV = 100
 PLAYER_I_MANA = 10
 PLAYER_I_ULT = 200
 PLAYER_SCALE = 1.16
+PLAYER_ULT_SCALE = 1.05
+SHIELD_SCALE = 0.3
 
 MONSTER_I_PV = 200
 MONSTER_I_POWER = 10
@@ -75,7 +76,7 @@ def game_over(data,x:int,des:str):
 
     test_high = False
     if score > 0 and not is_cheating:
-        new_hs = save_score_with_fallback(nickname, score, level, save_hs) # [BALISE ONLINE HIGHSCORES]
+        new_hs = save_score_with_fallback(nickname, score, level, save_hs)
         test_high = (score == new_hs)
 
     print("\n\033[7m" + "=" * get_width())
@@ -90,7 +91,6 @@ def game_over(data,x:int,des:str):
     print(" " * get_width() + "\n" + " " * get_width())
     print("=" * get_width() + "\033[0m")
 
-    #dump_json(data)
     clear_save()
     input("\nAppuyez sur ENTER pour revenir à l'écran d'accueil")
     return False
@@ -289,7 +289,7 @@ def launch_starters_scene(data):
 
 def launch_tuto_fight(player):
     tuto_enemy = Monster("Tuto", 200, Weapon("Épée classique", 10, 0, 0, 0), 1)
-    result = Fight(player, tuto_enemy, 0, 4, True).fight_loop()
+    result = Fight(player, tuto_enemy, 0, 1, True).fight_loop()
     return result
 
 def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANALYSIS, max_inv_size=MAX_INV_SIZE, max_weapon_slots=MAX_WEAPON_SLOTS):
@@ -350,13 +350,15 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
         player.pv = player.max_pv
         player.max_mana = int(PLAYER_I_MANA*PLAYER_SCALE**difficulty)
         player.mana = player.max_mana
-        player.max_stim = int(PLAYER_I_ULT*PLAYER_SCALE**difficulty)
+        player.max_stim = int(PLAYER_I_ULT*PLAYER_ULT_SCALE**difficulty)
 
     # START FIGHTIN'
     result = Fight(player, new_enemy, difficulty, max_analysis).fight_loop(max_inv_size)
 
     if result is True:
         if is_bossfight:
+            max_analysis, max_inv_size, max_weapon_slots = offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots)
+
             print("\nTu as battu un haut offier de l'espace mental Roi")
             print("Son arme a l'air forte...")
             wait_input()
@@ -400,20 +402,9 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
                 print(f"""\n L'ennemi a laissé tomber "{loot.name}" (Effet: {loot.effect} {loot.value})""")
                 wait_input()
 
-        max_analysis, max_inv_size, max_weapon_slots = offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots)
-
     return result, max_analysis, max_inv_size, max_weapon_slots
 
 def offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots):
-    """
-    La fonction de Progression demandée dans le cahier des charges
-    :param max_weapon_slots: Nbre de slots d'armes actuel
-    :param max_inv_size: Nbre de slots à obj actuel
-    :param player: Instance joueur
-    :param max_analysis: Max d'analyses actuel
-    :return: tuple(max_analysis, max_inv_size) (joueur mis à jour)
-    """
-
     clear_console()
     play_sound("bell")
 
@@ -421,7 +412,7 @@ def offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots):
         print("\n" + "="*20 + "| AMÉLIORATION |" + "="*20)
         print(f"[1] Capacité d'armes +1 ({max_weapon_slots} -> {max_weapon_slots+1})")
         print(f"[2] Capacité d'objets +1 ({max_inv_size} -> {max_inv_size+1})")
-        print(f"[3] Capacité d'analyses +2 ({max_analysis} -> {max_analysis+2})")
+        print(f"[3] Capacité d'analyses +1 ({max_analysis} -> {max_analysis+1})")
     def conf(action_input):
         return action_input.isdigit() and 0 < int(action_input) <= 3
 
@@ -439,7 +430,7 @@ def offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots):
     elif choice == 3:
         print("\nNombre d'analyses augmenté !")
         wait_input()
-        return max_analysis + 2, max_inv_size, max_weapon_slots
+        return max_analysis + 1, max_inv_size, max_weapon_slots
     else:
         print("[DEBUG] Erreur dans la fonction conf(action_input)")
         return "gdsofusykgeluqs"

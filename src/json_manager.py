@@ -37,12 +37,12 @@ def save_game(new_player, level=1, used_monsters=None, max_inv_size=None):
     data["player"]["max_stim"] = new_player.max_stim
     data["player"]["current_level"] = level
 
-    if used_monsters is not None: # Ens vide accepté mais pas None
+    if used_monsters is not None:
         data["used_monsters"] = used_monsters
     if max_inv_size is not None:
         data["max_inv_size"] = max_inv_size
+    data["player"]["weapons_inv"] = {}
 
-    data["player"]["weapons_inv"].clear()
     for n, weapon in enumerate(new_player.weapons):
         data["player"]["weapons_inv"][f"weapon_slot_{n+1}"]={
             "name": weapon.name,
@@ -52,7 +52,7 @@ def save_game(new_player, level=1, used_monsters=None, max_inv_size=None):
             "buff_count": weapon.buff_count
         }
 
-    data["player"]["objects_inv"].clear()
+    data["player"]["objects_inv"] = {}
     for n, obj in enumerate(new_player.inventory):
         data["player"]["objects_inv"][f"object_slot_{n+1}"]={
             "name": obj.name,
@@ -63,14 +63,14 @@ def save_game(new_player, level=1, used_monsters=None, max_inv_size=None):
     with open("JSON/active_data.json", "w", encoding="utf-8") as write_file:
         json.dump(data, write_file, indent=4, ensure_ascii=False)
 
-def saved_game(): # Retourne un boléen
+def saved_game():
     return data["player"]["nickname"] is not None and data["player"]["pv"] > 0 and data["player"]["max_pv"] is not None and data["player"]["stim"] is not None
 
 def get_save():
     if saved_game():
         return {
             "nickname": data["player"]["nickname"],
-            "level": data["player"].get("current_level", 1), #Merci StackOverflow pour l'incroyable méthode get()
+            "level": data["player"].get("current_level", 1),
             "pv": data["player"]["pv"],
             "max_pv": data["player"]["max_pv"],
             "score": data["player"].get("score", 0)
@@ -80,30 +80,28 @@ def get_save():
 def clear_save():
     global data # Le temps que j'ai mis à trouver ça ¯\_(ツ)_/¯
 
-    def clear_dict(dicts):
-        for key, value in list(dicts.items()):
-            if isinstance(value, dict):
-                clear_dict(value)
-            else:
-                dicts[key] = None
-
-    clear_dict(data)
-    data["used_monsters"] = []
-    data["cheat"] = False
-
-    if "weapon_slot_4" in data["player"]["weapons_inv"]:
-        del data["player"]["weapons_inv"]["weapon_slot_4"]
+    data = {
+        "player": {
+            "nickname": None,
+            "pv": None,
+            "max_pv": None,
+            "stim": None,
+            "max_stim": None,
+            "mana": None,
+            "max_mana": None,
+            "score": None,
+            "current_level": None,
+            "weapons_inv": {},
+            "objects_inv": {}
+        },
+        "used_monsters": [],
+        "cheat": False,
+        "seed": None
+    }
 
     with open("JSON/active_data.json", "w", encoding="utf-8") as write_file:
         json.dump(data, write_file, indent=4, ensure_ascii=False)
 
-
-#def dump_json(data_to_save):
-#    with open("JSON/active_data.json", "w", encoding="utf-8") as write_file:
-#        json.dump(data_to_save, write_file, ensure_ascii=False, indent=4)
-#
-#    player = data["player"]
-#    save_hs(player["nickname"], player["score"], player["current_level"])
 
 def get_player_data():
     weapons_inventory = []
@@ -115,7 +113,7 @@ def get_player_data():
         e = data["player"]["weapons_inv"][i].get("buff_count", 0)
         weapons_inventory.append(Weapon(a, b, c, d, e))
 
-    objects_inventory = [] # A faire plus tard
+    objects_inventory = []
     for i in data["player"]["objects_inv"].keys():
         a = data["player"]["objects_inv"][i]["name"]
         b = data["player"]["objects_inv"][i]["effect"]

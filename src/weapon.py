@@ -77,15 +77,19 @@ def generate_starters():
     attempt = 0
     while len(starter_list) < NUM_CLASSIC_STARTER and GEN_ATTEMPTS > attempt :
         weapon = create_weapon(CLASSIC_N)
-        if weapon not in already_used_stats:
+        stats_tuple = (weapon.power, weapon.stim, weapon.mana)
+
+        if stats_tuple not in already_used_stats:
             starter_list.append(weapon)
-            already_used_stats.add(weapon)
+            already_used_stats.add(stats_tuple)
         attempt += 1
 
     attempt = 0
-    approved = True
     while len(starter_list) < (NUM_CLASSIC_STARTER+NUM_OP_STARTER) and GEN_ATTEMPTS > attempt :
         op_weapon = create_weapon(OP_N)
+        stats_tuple = (op_weapon.power, op_weapon.stim, op_weapon.mana)
+
+        approved = True
         for classic_weapon in starter_list:
             if ((op_weapon.power == classic_weapon.power + 10 and
                 op_weapon.stim == classic_weapon.stim and
@@ -98,7 +102,7 @@ def generate_starters():
 
         if op_weapon not in already_used_stats and approved:
             starter_list.append(op_weapon)
-            already_used_stats.add(op_weapon)
+            already_used_stats.add(stats_tuple)
         attempt += 1
 
     while len(starter_list) < (NUM_CLASSIC_STARTER + NUM_OP_STARTER):

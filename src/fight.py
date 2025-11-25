@@ -10,7 +10,7 @@ FADE_OUT = 2500 #ms
 MISS_CHANCE = 0.05
 HEAL_CHANCE = 0.05
 HEAL_AMOUNT = 0.1
-MAX_ANALYSIS = 4
+MAX_ANALYSIS = 1
 MAX_WEAPON_SLOTS = 3
 
 red = "\033[1;31m"
@@ -39,7 +39,6 @@ class Fight:
         self.analysis_count = max_analysis
         self.max_analysis = max_analysis
         self.level = level
-        #self.txt_buffer = []
         self.tuto = tuto
 
 
@@ -239,10 +238,6 @@ class Fight:
             self.enemy.nerf_defense = 1.0
         print()
 
-        #if self.txt_buffer:
-        #    print("\n".join(self.txt_buffer))
-        #    print()
-
     def find_weakness(self):
         weakness = str(self.enemy.weakness)
 
@@ -345,10 +340,13 @@ class Fight:
                             else f"Arme améliorée de {option.value} Att" if option.effect == "att_boost" \
                             else f"Bouclier de {option.value} PV" if option.effect == "shield" \
                             else f"Charge de {option.value} MANA" if option.effect == "mana_ult_charge" \
+                            else f"Arme x{option.value} Att" if option.effect == "att_mult" \
                             else "[DEBUG] Effet défaillant"
 
-                        offset = " " * (max(len(o.name) for o in player.inventory)+2-len(option.name))
-                        print(f"[{i+1}] {option.name}{offset}(Effet: {effect})")
+                        max_len = max(len(o.name) for o in player.inventory)
+                        index_display = f"[{i+1}] " if i < 9 else f"[{i+1}]"
+                        offset = " " * (max_len + 2 - len(option.name))
+                        print(f"{index_display} {option.name}{offset}(Effet: {effect})")
 
                     print(f"[{len(player.inventory) + 1}] Retour")
                 def conf(action_input):

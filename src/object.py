@@ -11,7 +11,8 @@ with open("JSON/cst_data.json", "r", encoding="utf-8") as read_file:
 
 MAX_INV_SIZE = 6
 OBJECT_SCALE = 1.17
-OBJECT_SCALE_SLOWDOWN = 0.8 # became speed up instead of slowdown
+OBJECT_SCALE_SLOWDOWN = 1
+SHIELD_NERF = 0.7
 
 class Object:
     def __init__(self, name: str, effect: str, value):
@@ -19,11 +20,10 @@ class Object:
         self.effect = effect
         self.value = value
 
-    def use(self, player, max_inv_size=6): # Ajouter un para enemy=None si un obj a des effets sur enemy
+    def use(self, player, max_inv_size=6):
         if self.effect == "new_obj":
             player.mana -= 3
             new_object = rand_obj_inv(player.inventory)
-            #print(f"[DEBUG] rand_obj() : {new_object}")
             player.inventory.append(new_object)
             print(f""""{self.name}" a invoqué l'objet "{new_object.name}" """)
             return True
@@ -68,8 +68,9 @@ class Object:
                 return True
 
         elif self.effect == "shield":
-            player.shield(self.value)
-            print(f"{self.name} érige un bouclier ayant {self.value} PV")
+            nerfed_shield = int(self.value*SHIELD_NERF)
+            player.shield(nerfed_shield)
+            print(f"{self.name} érige un bouclier ayant {nerfed_shield} PV")
             return True
 
         elif self.effect == "mana_ult_charge":
@@ -109,13 +110,9 @@ def get_rand_obj(inv, lvl_bonus=False, lvl=1):
     template = choices(available_obj, weights=norm_prob, k=1)[0]
     name, effect, min_value, max_value, _ = template
 
-    if lvl_bonus and effect != "mana_ult_charge":
+    if lvl_bonus and effect != "mana_ult_charge" and effect != "att_mult":
         bonus = int(min_value*OBJECT_SCALE**(lvl/OBJECT_SCALE_SLOWDOWN))
-
-        if effect == "att_mult":
-            value = round(uniform(min_value + bonus/10, max_value + bonus/10), 2)
-        else:
-            value = randint(int(min_value) + bonus, int(max_value) + bonus)
+        value = randint(int(min_value) + bonus, int(max_value) + bonus)
     else:
         if effect == "att_mult":
             value = round(uniform(min_value, max_value), 2)
