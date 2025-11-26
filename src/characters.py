@@ -95,10 +95,10 @@ class Player(Character):
             dgt = int(ULT_COEFFICIENT*(dgt**(1/len(self.weapons)))*target.nerf_defense)
 
             old_pv = target.pv
-            target.pv = max(target.pv - int(ULT_COEFFICIENT*(dgt**(1/len(self.weapons)))*target.nerf_defense), 0)
+            target.pv = max((target.pv - dgt), 0)
             overkill = 0
             if target.pv == 0:
-                overkill = int(ULT_COEFFICIENT*(dgt**(1/len(self.weapons)))*target.nerf_defense) - old_pv
+                overkill = dgt - old_pv
 
             print(f"Vos armes s'unissent et attaquent de {dgt} dégats !")
 

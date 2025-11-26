@@ -1,34 +1,34 @@
 {
     "player": {
-        "nickname": "Al",
-        "pv": 82,
-        "max_pv": 115,
-        "stim": 210,
-        "max_stim": 210,
+        "nickname": "ALex",
+        "pv": 156,
+        "max_pv": 156,
+        "stim": 0,
+        "max_stim": 231,
         "mana": 10,
         "max_mana": 10,
-        "current_level": 2,
-        "score": 120,
+        "current_level": 4,
+        "score": 220,
         "weapons_inv": {
             "weapon_slot_1": {
-                "name": "Ruep",
-                "power": 100,
-                "stim": 60,
-                "mana": 5,
-                "buff_count": 0
+                "name": "Tiioyef",
+                "power": 179,
+                "stim": 100,
+                "mana": 3,
+                "buff_count": 2
             },
             "weapon_slot_2": {
-                "name": "Orcl",
-                "power": 60,
-                "stim": 70,
-                "mana": 3,
+                "name": "Ndoel",
+                "power": 80,
+                "stim": 60,
+                "mana": 4,
                 "buff_count": 0
             },
             "weapon_slot_3": {
-                "name": "Tssairq",
-                "power": 90,
-                "stim": 50,
-                "mana": 4,
+                "name": "Soepsik",
+                "power": 70,
+                "stim": 80,
+                "mana": 5,
                 "buff_count": 0
             }
         },
@@ -39,30 +39,27 @@
                 "value": 0
             },
             "object_slot_2": {
-                "name": "Buff instant",
-                "effect": "att_boost",
-                "value": 25
-            },
-            "object_slot_3": {
-                "name": "Ama-no-Iwato",
-                "effect": "shield",
-                "value": 70
-            },
-            "object_slot_4": {
                 "name": "Petite popo de soin",
                 "effect": "heal",
-                "value": 43
+                "value": 79
             },
-            "object_slot_5": {
+            "object_slot_3": {
                 "name": "P'tit bouclier",
                 "effect": "shield",
-                "value": 48
+                "value": 58
+            },
+            "object_slot_4": {
+                "name": "Carbonade",
+                "effect": "mana_ult_charge",
+                "value": 9
             }
         }
     },
     "used_monsters": [
-        "Boegart Hangar"
+        "Fred de la ville de Waterloo",
+        "Ken Hasselmanette",
+        "Thomas Sauvage"
     ],
     "cheat": false,
-    "seed": 11482863
+    "seed": 6652391
 }

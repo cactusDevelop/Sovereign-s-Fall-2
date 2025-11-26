@@ -113,7 +113,7 @@ class Fight:
                     wait_input()
                     return None
 
-            action_check = self.player.use_obj(value, max_inv_size)
+            action_check = self.player.use_obj(value, max_inv_size, self.level)
             if action_check:
                 self.player.mana = min(self.player.mana + 1, self.player.max_mana)
                 return "Obj"
