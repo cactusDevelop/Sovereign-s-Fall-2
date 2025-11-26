@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, I'm Cactusdev</h1>
 <h3 align="center">A passionate developer from Belgium</h3>
 
-- 🔭 I’m currently working on **Roguelike**
+- 🔭 I’m currently working on a Roguelike called "**Sovereign's Fall**"
 
 - 🌱 I’m currently learning **Python OOP**
 
