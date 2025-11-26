@@ -4,11 +4,9 @@ import pygame, random
 from json_manager import *
 from global_func import *
 from musics import play_sound, stop_sound
-from online_highscores_hors_projet import get_online_highscore, get_online_leaderboard
+from online_highscores import get_online_highscore, get_online_leaderboard
 from scenes import launch_cutscene, launch_starters_scene, launch_tuto_fight, game_over
-
-
-CHEAT_CODE = "zahoe"
+from constants import OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE
 
 
 # CACHER LES MESSAGES D'ERREUR (parce que c moche)
@@ -21,8 +19,8 @@ class DevNull:
 sys.stderr = DevNull()"""
 
 
-def add_score(l:int):
-    data["player"]["score"] += l
+def add_score(points:int):
+    data["player"]["score"] += points
 
 # MENU
 def display_menu():
@@ -42,7 +40,6 @@ def display_menu():
 
                 print("\n ░█"+"█"*(len(line_2)-15))
                 print(line_2)
-                #print(f"| par {best['nickname']} (Niveau {best['level']})")
                 print(" ░█" + "█"*(len(line_2)-15))
         except:
             if hs["highscore"] > 0:
@@ -169,22 +166,21 @@ def run_intro():
 
 def run_fight_loop():
     from scenes import launch_keep_fighting, game_over
-    from fight import MAX_ANALYSIS, MAX_WEAPON_SLOTS
-    from object import MAX_INV_SIZE
 
     fighting = True
-    max_analysis = MAX_ANALYSIS
-    max_inv_size = MAX_INV_SIZE
-    max_weapon_slots = MAX_WEAPON_SLOTS
 
     while fighting:
         player = get_player_data()
         lvl = data["player"]["current_level"]
         u_m = get_used_monsters()
-        fight_result, max_analysis, max_inv_size, max_weapon_slots = launch_keep_fighting(lvl, player, u_m, max_analysis, max_inv_size, max_weapon_slots)
+
+        fight_result, overkill, max_analysis, max_inv_size, max_weapon_slots = launch_keep_fighting(lvl, player, u_m, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS)
 
         if fight_result:
             add_score(20 * lvl)
+            if overkill > 0:
+                add_score(int(overkill*OVERKILL_MULT))
+
             lvl += 1
             data["player"]["current_level"] = lvl
             save_game(player, lvl, u_m)
@@ -196,6 +192,7 @@ def run_fight_loop():
 # GAME LOOP
 if __name__ == "__main__":
     running = True
+    save_size()
 
     while running:
         menu_to = display_menu()

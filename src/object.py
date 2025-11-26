@@ -1,18 +1,19 @@
 
-from random import choices, randint, uniform
-
 import json
 
+from random import choices, randint, uniform
 from global_func import solid_input
 
 with open("JSON/cst_data.json", "r", encoding="utf-8") as read_file:
     cst_data = json.load(read_file)
     OBJECT_BLUEPRINTS = cst_data.get("object_blueprints", [])
+    GAME_CST = cst_data.get("game_cst", {})
 
-MAX_INV_SIZE = 6
-OBJECT_SCALE = 1.17
-OBJECT_SCALE_SLOWDOWN = 1
-SHIELD_NERF = 0.7
+MAX_INV_SIZE = GAME_CST["max_inv_size"]
+OBJECT_SCALE = GAME_CST["object_scale"]
+OBJECT_SCALE_SLOWDOWN = GAME_CST["object_scale_slowdown"]
+SHIELD_NERF = GAME_CST["shield_nerf"]
+
 
 class Object:
     def __init__(self, name: str, effect: str, value):
@@ -20,10 +21,10 @@ class Object:
         self.effect = effect
         self.value = value
 
-    def use(self, player, max_inv_size=6):
+    def use(self, player, max_inv_size, lvl):
         if self.effect == "new_obj":
             player.mana -= 3
-            new_object = rand_obj_inv(player.inventory)
+            new_object = get_rand_obj(player.inventory, lvl)
             player.inventory.append(new_object)
             print(f""""{self.name}" a invoqué l'objet "{new_object.name}" """)
             return True
@@ -38,8 +39,8 @@ class Object:
             def to_display():
                 print("\n" + "="*10 + "Arme à améliorer" + "="*10)
                 for i, weapon in enumerate(player.weapons):
-                    remaining = weapon.MAX_BUFFS - weapon.buff_count
-                    print(f"[{i+1}] {weapon.name} (Att: {weapon.power}, Buffs restants: {remaining}/{weapon.MAX_BUFFS})")
+                    remaining_buffs = weapon.MAX_BUFFS - weapon.buff_count
+                    print(f"[{i+1}] {weapon.name} (Att: {weapon.power}, Buffs restants: {remaining_buffs}/{weapon.MAX_BUFFS})")
                 print(f"[{len(player.weapons)+1}] Retour")
             def conf(action_input):
                 return action_input.isdigit() and 0 < int(action_input) <= len(player.weapons) + 1
@@ -84,7 +85,7 @@ class Object:
             print("[DEBUG] Je n'ai pas programmé cet effet")
             return True
 
-def get_rand_obj(inv, lvl_bonus=False, lvl=1):
+def get_rand_obj(inv, lvl=1):
     if not OBJECT_BLUEPRINTS: # Fallback si le json merde
         print("[DEBUG] Je sais même pas si on le verra avec tous les clear_console")
         return Object("Potion par défaut", "heal", 50)
@@ -110,7 +111,7 @@ def get_rand_obj(inv, lvl_bonus=False, lvl=1):
     template = choices(available_obj, weights=norm_prob, k=1)[0]
     name, effect, min_value, max_value, _ = template
 
-    if lvl_bonus and effect != "mana_ult_charge" and effect != "att_mult":
+    if effect != "mana_ult_charge" and effect != "att_mult":
         bonus = int(min_value*OBJECT_SCALE**(lvl/OBJECT_SCALE_SLOWDOWN))
         value = randint(int(min_value) + bonus, int(max_value) + bonus)
     else:
@@ -121,9 +122,3 @@ def get_rand_obj(inv, lvl_bonus=False, lvl=1):
 
     return Object(name, effect, value)
 
-
-def rand_obj_inv(inv):
-    return get_rand_obj(inv, lvl_bonus=False)
-
-def enemy_loot(lvl, inv):
-    return get_rand_obj(inv, lvl_bonus=True, lvl=lvl)

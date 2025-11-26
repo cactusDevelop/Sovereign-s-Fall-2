@@ -1,91 +1,68 @@
 {
     "player": {
-        "nickname": null,
-        "pv": null,
-        "max_pv": null,
-        "stim": null,
-        "max_stim": null,
-        "mana": null,
-        "max_mana": null,
-        "current_level": null,
-        "score": null,
+        "nickname": "Al",
+        "pv": 82,
+        "max_pv": 115,
+        "stim": 210,
+        "max_stim": 210,
+        "mana": 10,
+        "max_mana": 10,
+        "current_level": 2,
+        "score": 120,
         "weapons_inv": {
             "weapon_slot_1": {
-                "name": null,
-                "power": null,
-                "stim": null,
-                "mana": null,
-                "buff_count": null
+                "name": "Ruep",
+                "power": 100,
+                "stim": 60,
+                "mana": 5,
+                "buff_count": 0
             },
             "weapon_slot_2": {
-                "name": null,
-                "power": null,
-                "stim": null,
-                "mana": null,
-                "buff_count": null
+                "name": "Orcl",
+                "power": 60,
+                "stim": 70,
+                "mana": 3,
+                "buff_count": 0
             },
             "weapon_slot_3": {
-                "name": null,
-                "power": null,
-                "stim": null,
-                "mana": null,
-                "buff_count": null
+                "name": "Tssairq",
+                "power": 90,
+                "stim": 50,
+                "mana": 4,
+                "buff_count": 0
             }
         },
         "objects_inv": {
             "object_slot_1": {
-                "name": null,
-                "effect": null,
-                "value": null
+                "name": "Sac des abîmes",
+                "effect": "new_obj",
+                "value": 0
             },
             "object_slot_2": {
-                "name": null,
-                "effect": null,
-                "value": null
+                "name": "Buff instant",
+                "effect": "att_boost",
+                "value": 25
             },
             "object_slot_3": {
-                "name": null,
-                "effect": null,
-                "value": null
+                "name": "Ama-no-Iwato",
+                "effect": "shield",
+                "value": 70
             },
             "object_slot_4": {
-                "name": null,
-                "effect": null,
-                "value": null
+                "name": "Petite popo de soin",
+                "effect": "heal",
+                "value": 43
             },
             "object_slot_5": {
-                "name": null,
-                "effect": null,
-                "value": null
-            },
-            "object_slot_6": {
-                "name": null,
-                "effect": null,
-                "value": null
-            },
-            "object_slot_7": {
-                "name": null,
-                "effect": null,
-                "value": null
-            },
-            "object_slot_8": {
-                "name": null,
-                "effect": null,
-                "value": null
-            },
-            "object_slot_9": {
-                "name": null,
-                "effect": null,
-                "value": null
-            },
-            "object_slot_10": {
-                "name": null,
-                "effect": null,
-                "value": null
+                "name": "P'tit bouclier",
+                "effect": "shield",
+                "value": 48
             }
         }
     },
-    "used_monsters": [],
+    "used_monsters": [
+        "Boegart Hangar"
+    ],
     "cheat": false,
-    "seed": null
+    "seed": 11482863
 }

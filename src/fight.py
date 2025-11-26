@@ -1,17 +1,10 @@
 
-import random, json
+import random
 
 from global_func import *
 from musics import play_sound, stop_sound
-from object import MAX_INV_SIZE
+from constants import MAX_ANALYSIS, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS
 
-MAX_NAV_ITERATIONS = 30
-FADE_OUT = 2500 #ms
-MISS_CHANCE = 0.05
-HEAL_CHANCE = 0.05
-HEAL_AMOUNT = 0.1
-MAX_ANALYSIS = 1
-MAX_WEAPON_SLOTS = 3
 
 red = "\033[1;31m"
 blue = "\033[0;34m"
@@ -24,14 +17,6 @@ with open("JSON/cst_data.json", "r", encoding="utf-8") as read_file:
 
 class Fight:
     def __init__(self, player, enemy, level=0, max_analysis=MAX_ANALYSIS, tuto=False):
-        """
-
-        :param player: Instance du joueur
-        :param enemy: Instance de l'ennemi ou boss affronté
-        :param level: Niveau actuel
-        :param max_analysis: Nombre d'analyses disponibles
-        :param tuto: Si premier niveau alors afficher "4) Info"
-        """
         self.player = player
         self.enemy = enemy
         self.turn_count = 0
@@ -42,14 +27,13 @@ class Fight:
         self.tuto = tuto
 
 
-    def fight_loop(self, max_inv_size=MAX_INV_SIZE):
-        """
-        Boucle de combat
-        :return: si gagné ou perdu
-        """
+    def fight_loop(self, max_inv_size=MAX_INV_SIZE, boss_music=False):
         print(f"\n{cyan}{self.player.name}\033[0m engage le combat contre {red}{self.enemy.name}\033[0m")
         wait_input()
-        play_sound("fight", True)
+        if boss_music:
+            play_sound("boss", True)
+        else:
+            play_sound("fight", True)
 
         while True:
             self.turn_count += 1
@@ -108,7 +92,10 @@ class Fight:
 
             self.player.mana -= equiped_w.mana
 
-            self.player.attack(self.enemy)
+            overkill = self.player.attack(self.enemy)
+            if overkill > 0:
+                return "Att", overkill
+
             self.player.charge(self.player.weapon.stim)
 
             self.player.mana = min(self.player.mana + 1, self.player.max_mana)
@@ -348,7 +335,7 @@ class Fight:
                         offset = " " * (max_len + 2 - len(option.name))
                         print(f"{index_display} {option.name}{offset}(Effet: {effect})")
 
-                    print(f"[{len(player.inventory) + 1}] Retour")
+                    print(f"[{len(player.inventory) + 1}]  Retour")
                 def conf(action_input):
                     return action_input.isdigit() and 0 < int(action_input) <= len(player.inventory)+1
 

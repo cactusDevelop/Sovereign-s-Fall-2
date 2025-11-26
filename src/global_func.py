@@ -1,5 +1,5 @@
 
-import os, sys, time, msvcrt
+import os, sys, time, msvcrt, json
 
 
 def clear_console():
@@ -18,7 +18,7 @@ def slow_print(txt: tuple, delay: float):
         sys.stdout.write(l)
         sys.stdout.flush()
         time.sleep(delay)
-        #Ajouter un sfx ?
+        #Ajouter un sfx typewriting ?
     print()
 
 def solid_input(conf, to_display):
@@ -29,7 +29,7 @@ def solid_input(conf, to_display):
         action_input = ''.join(char for char in action_input if ord(char) < 128)
     except KeyboardInterrupt:
         raise
-    except: # Tout ça pour ³
+    except:
         action_input = ""
 
     while not conf(action_input):
@@ -42,7 +42,7 @@ def solid_input(conf, to_display):
             action_input = ''.join(char for char in action_input if ord(char) < 128)
         except KeyboardInterrupt:
             raise
-        except:  # Tout ça pour ²
+        except:
             action_input = ""
 
     return action_input.lower()
@@ -66,7 +66,7 @@ def wait_input():
             input()
 
     else:
-        input() # Je prends pas le risque sur Linux/IOS
+        input() # Déso aux sys d'exploitation Linux et IOS
     print()
 
 
@@ -78,3 +78,13 @@ def center_txt(txt:tuple):
         centered.append(line)
 
     return tuple(centered)
+
+def save_size():
+    try:
+        width = os.get_terminal_size().columns
+        height = os.get_terminal_size().lines
+    except OSError:
+        width, height = 80, 24
+
+    with open("JSON/debug.json", "w") as f:
+        json.dump({"terminal_width": width, "terminal_height": height}, f)

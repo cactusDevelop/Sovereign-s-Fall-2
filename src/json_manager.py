@@ -12,6 +12,7 @@ with open("JSON/cst_data.json", "r", encoding="utf-8") as read_cst:
 with open("JSON/highscores.json", "r", encoding="utf-8") as read_hs:
     hs = json.load(read_hs)
 
+
 def get_cst_names():
     return cst["monster_names"], cst["boss_names"], cst["weapon_names"]
 

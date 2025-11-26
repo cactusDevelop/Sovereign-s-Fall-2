@@ -28,6 +28,10 @@ def play_sound(which, is_bg=False):
                 pygame.mixer.music.load(f"MUSICS/fight/{rand_music}")
                 pygame.mixer.music.play(loops=-1)
                 pygame.mixer.music.set_volume(0.15)
+        elif which == "boss":
+            pygame.mixer.music.load(f"MUSICS/fight/boss.mp3")
+            pygame.mixer.music.play(loops=-1)
+            pygame.mixer.music.set_volume(0.2)
         else:
             pygame.mixer.music.load(f"MUSICS/{which}.mp3")
             pygame.mixer.music.play(loops=-1)

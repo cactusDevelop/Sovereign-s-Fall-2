@@ -1,17 +1,20 @@
-import json
+
 import random
 
 from json_manager import get_cst_names, save_hs, clear_save
-from weapon import generate_starters
+from weapon import Weapon, generate_starters, gen_boss_weapon
 from musics import play_sound, stop_sound
 from characters import Monster
-from weapon import Weapon, gen_boss_weapon
-from object import Object, enemy_loot, MAX_INV_SIZE
-from fight import Fight, MAX_ANALYSIS, MAX_WEAPON_SLOTS
+from object import Object, get_rand_obj
+from fight import Fight
 from global_func import *
-from online_highscores_hors_projet import save_score_with_fallback
+from online_highscores import save_score_with_fallback
+from constants import (MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE,
+                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES)
 
-
+OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
+CHEAT_WEAPON = Weapon("Mange tes morts", 9999, 9999, 0, 0)
+MAX_NAME_SIZE = get_width()//3
 
 incognito = " \033[1;32m???\033[0m"
 red = "\033[1;31m"
@@ -19,32 +22,7 @@ green = "\033[1;32m"
 cyan = "\033[1;36m"
 blue = "\033[1;94m"
 
-OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
-CHEAT_WEAPON = Weapon("Mange tes morts", 9999, 9999, 0, 0)
 
-# EQUILIBRAGE
-PLAYER_I_PV = 100
-PLAYER_I_MANA = 10
-PLAYER_I_ULT = 200
-PLAYER_SCALE = 1.16
-PLAYER_ULT_SCALE = 1.05
-SHIELD_SCALE = 0.3
-
-MONSTER_I_PV = 200
-MONSTER_I_POWER = 10
-MONSTER_SCALE = 1.18
-
-BOSS_I_PV = 200
-BOSS_I_POWER = 15
-BOSS_SCALE = 1.20
-
-with open("JSON/cst_data.json", "r", encoding="utf-8") as read_file:
-    cst = json.load(read_file)
-    RANDOM_LINES = cst.get("rand_lines", ["\nTu t'enfonces dans les ténèbres à la recherche d'une réponse..."])
-    WEAKNESSES = cst.get("weaknesses", {})
-
-
-MAX_NAME_SIZE = get_width()//3
 def clean_nick(nickname):
     nickname = nickname.strip()
     if not nickname:
@@ -279,7 +257,7 @@ def launch_starters_scene(data):
     # DEFAULT STATS
     data["player"]["pv"] = data["player"]["max_pv"] = 100
     data["player"]["stim"] = 100
-    data["player"]["max_stim"] = 200 # Attention ce n'est pas pris en compte ici, mais dans le scale d'ult et mana
+    data["player"]["max_stim"] = 200
     data["player"]["mana"] = data["player"]["max_mana"] = 10
 
     stop_sound(2000)
@@ -293,16 +271,6 @@ def launch_tuto_fight(player):
     return result
 
 def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANALYSIS, max_inv_size=MAX_INV_SIZE, max_weapon_slots=MAX_WEAPON_SLOTS):
-    """
-
-    :param max_weapon_slots: Nbre de slots armes
-    :param max_inv_size: Nbre de slots obj
-    :param max_analysis: Nbre d'analyses
-    :param difficulty: Niveau atteint
-    :param player: Instance joueur
-    :param used_monsters: Noms de monstre utilisés
-    :return: tuple(result, max_analysis, max_inv_size)
-    """
     clear_console()
     stop_sound(1000)
 
@@ -324,6 +292,8 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
         player.max_pv = int(PLAYER_I_PV*PLAYER_SCALE**difficulty)
         player.pv = int(player.max_pv//(4/3))
         player.mana = player.max_mana//2
+        fight_result = Fight(player, new_enemy, difficulty, max_analysis, False).fight_loop(max_inv_size, True)
+
     else:
         print()
         print(random.choice(RANDOM_LINES))
@@ -351,11 +321,15 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
         player.max_mana = int(PLAYER_I_MANA*PLAYER_SCALE**difficulty)
         player.mana = player.max_mana
         player.max_stim = int(PLAYER_I_ULT*PLAYER_ULT_SCALE**difficulty)
+        fight_result = Fight(player, new_enemy, difficulty, max_analysis, False).fight_loop(max_inv_size, False)
 
-    # START FIGHTIN'
-    result = Fight(player, new_enemy, difficulty, max_analysis).fight_loop(max_inv_size)
+    if isinstance(fight_result, tuple):
+        result, overkill = fight_result
+    else:
+        result = fight_result
+        overkill = 0
 
-    if result is True:
+    if fight_result is True:
         if is_bossfight:
             max_analysis, max_inv_size, max_weapon_slots = offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots)
 
@@ -384,7 +358,7 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
 
                 if choice < len(player.weapons):
                     print(f"""\n"{player.weapons[choice].name}" jetée""")
-                    play_sound("bell") # Throw sound better
+                    play_sound("bell")
                     player.weapons[choice] = b_weapon
                 else:
                     print(f"\n{b_weapon.name} jetée")
@@ -397,12 +371,12 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
                 print("Inventaire plein, pas de loot")
                 wait_input()
             else:
-                loot = enemy_loot(difficulty, player.inventory)
+                loot = get_rand_obj(player.inventory, difficulty)
                 player.inventory.append(loot)
                 print(f"""\n L'ennemi a laissé tomber "{loot.name}" (Effet: {loot.effect} {loot.value})""")
                 wait_input()
 
-    return result, max_analysis, max_inv_size, max_weapon_slots
+    return fight_result, overkill, max_analysis, max_inv_size, max_weapon_slots
 
 def offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots):
     clear_console()

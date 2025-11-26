@@ -4,7 +4,6 @@ import requests, json, base64, os
 
 # CHARGEMENT SÉCURISÉ DE LA CONFIGURATION
 def load_config():
-    """Charge la config depuis config.json (ignoré par git)"""
     config_path = "JSON/config.json"
 
     if not os.path.exists(config_path):
@@ -20,12 +19,12 @@ def load_config():
             return None
 
         return config
+
     except Exception as e:
         print(f"[ERREUR] Impossible de charger la config: {e}")
         return None
 
 
-# Chargement de la config au démarrage
 CONFIG = load_config()
 
 # Si pas de config, les fonctions fonctionneront en mode local uniquement
@@ -51,7 +50,6 @@ class OnlineHighscores:
             print("[INFO] Highscores en ligne désactivés (pas de config)")
 
     def fetch_online_scores(self):
-        """Récupère les scores depuis GitHub"""
         if not self.enabled:
             return None
 
@@ -62,16 +60,9 @@ class OnlineHighscores:
                 data = response.json()
                 self.last_sha = data['sha']
 
-                # DEBUG: Afficher le contenu brut
-                #print(f"[DEBUG] Content encodé (100 premiers chars): {data['content'][:100]}")
-
                 content = base64.b64decode(data['content']).decode('utf-8')
 
-                # DEBUG: Afficher le contenu décodé
-                #print(f"[DEBUG] Content décodé: {content}")
-
                 self.local_cache = json.loads(content)
-                #print(f"[DEBUG] JSON parsé: {self.local_cache}")
 
                 return self.local_cache
 
@@ -85,7 +76,6 @@ class OnlineHighscores:
             return None
 
     def create_initial_file(self, data):
-        """Crée le fichier initial sur GitHub"""
         if not self.enabled:
             return False
 
@@ -112,7 +102,6 @@ class OnlineHighscores:
             return False
 
     def push_score(self, nickname, score, level):
-        """Envoie un nouveau score sur GitHub"""
         if not self.enabled:
             return False
 
@@ -162,7 +151,6 @@ class OnlineHighscores:
             return False
 
     def get_top_10(self):
-        """Récupère le top 10 actuel"""
         if not self.enabled:
             return None
 
@@ -172,7 +160,6 @@ class OnlineHighscores:
         return None
 
     def get_highscore(self):
-        """Récupère le meilleur score"""
         if not self.enabled:
             return None
 
@@ -184,29 +171,22 @@ class OnlineHighscores:
 
 # FONCTIONS SIMPLES À UTILISER
 def save_online_score(nickname, score, level):
-    """Sauvegarde un score en ligne - Retourne True si succès, False sinon"""
     online = OnlineHighscores()
     return online.push_score(nickname, score, level)
 
 
 def get_online_leaderboard():
-    """Récupère le classement en ligne - Retourne None si pas disponible"""
     online = OnlineHighscores()
     return online.get_top_10()
 
 
 def get_online_highscore():
-    """Récupère le meilleur score - Retourne None si pas disponible"""
     online = OnlineHighscores()
     return online.get_highscore()
 
 
 # MODE HYBRIDE (Online + Local fallback)
 def save_score_with_fallback(nickname, score, level, local_save_func):
-    """
-    Essaie de sauvegarder en ligne, sinon sauvegarde localement
-    Retourne toujours le highscore (online ou local)
-    """
     online_success = False
 
     try:
@@ -216,7 +196,6 @@ def save_score_with_fallback(nickname, score, level, local_save_func):
     except:
         pass
 
-    # Toujours sauvegarder localement aussi (backup)
     local_highscore = local_save_func(nickname, score, level)
 
     if not online_success:
