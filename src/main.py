@@ -205,12 +205,17 @@ def run_fight_loop():
 
     fighting = True
 
+    current_max_analysis = MAX_ANALYSIS
+    current_max_inv_size = MAX_INV_SIZE
+    current_max_weapon_slots = MAX_WEAPON_SLOTS
+
     while fighting:
         player = get_player_data()
         lvl = data["player"]["current_level"]
         u_m = get_used_monsters()
 
-        fight_result, overkill, max_analysis, max_inv_size, max_weapon_slots = launch_keep_fighting(lvl, player, u_m, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS)
+        fight_result, overkill, current_max_analysis, current_max_inv_size, current_max_weapon_slots = launch_keep_fighting(
+            lvl, player, u_m, current_max_analysis, current_max_inv_size, current_max_weapon_slots)
 
         if fight_result:
             add_score(20 * lvl)

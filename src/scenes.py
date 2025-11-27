@@ -9,7 +9,7 @@ from object import Object, get_rand_obj
 from fight import Fight
 from global_func import *
 from online_highscores import save_score_with_fallback
-from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE,
+from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE, PLAYER_MANA_SCALE,
                        MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, REV_WHITE, RED, GREEN, BLUE, CYAN, BOLD, RESET)
 
 OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
@@ -282,8 +282,10 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
         boss_weapon = Weapon("Arme très puissante", boss_power, 0, 0, 0)
         new_enemy = Monster(boss_name, boss_pv, boss_weapon, 0)
 
-        player.max_mana = int(PLAYER_I_MANA*PLAYER_SCALE**difficulty)
-        player.max_pv = int(PLAYER_I_PV*PLAYER_SCALE**difficulty)
+        player.max_pv = int(PLAYER_I_PV * PLAYER_SCALE**difficulty)
+        player.max_stim = int(PLAYER_I_ULT * PLAYER_ULT_SCALE**difficulty)
+        player.max_mana = int(PLAYER_I_MANA * PLAYER_MANA_SCALE**difficulty)
+        player.can_ult = (player.stim >= player.max_stim)
         player.pv = int(player.max_pv//(4/3))
         player.mana = player.max_mana//2
         fight_result = Fight(player, new_enemy, difficulty, max_analysis, False).fight_loop(max_inv_size, True)
@@ -312,9 +314,10 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
 
         player.max_pv = int(PLAYER_I_PV*PLAYER_SCALE**difficulty)
         player.pv = player.max_pv
-        player.max_mana = int(PLAYER_I_MANA*PLAYER_SCALE**difficulty)
+        player.max_mana = int(PLAYER_I_MANA*PLAYER_MANA_SCALE**difficulty)
         player.mana = player.max_mana
         player.max_stim = int(PLAYER_I_ULT*PLAYER_ULT_SCALE**difficulty)
+        player.can_ult = (player.stim >= player.max_stim)
         fight_result = Fight(player, new_enemy, difficulty, max_analysis, False).fight_loop(max_inv_size, False)
 
     if isinstance(fight_result, tuple):

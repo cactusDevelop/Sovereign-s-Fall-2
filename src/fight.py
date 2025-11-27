@@ -299,11 +299,17 @@ class Fight:
                     print("="*15 + "Armes" + "="*15)
 
                     max_len = max(len(w.name.replace(GOLD, '').replace(RESET, '')) for w in player.weapons)
+
                     for i, option in enumerate(player.weapons):
-                        clean_name = option.name.replace(GOLD, '').replace(RESET, '') # Tt ça à cause du boss
-                        offset = " " * (max_len+2-len(clean_name))
-                        print(f"[{i+1}] {option.name}{offset}(Att:{option.power}, Ult:{option.stim}, Mana:{option.mana})")
-                    print(f"[{len(player.weapons)+1}] Retour")
+                        clean_name = option.name.replace(GOLD, '').replace(RESET, '')
+                        offset = " " * (max_len + 2 - len(clean_name))
+                        if GOLD in option.name:
+                            display_name = f"{GOLD}{clean_name}{RESET}"
+                        else:
+                            display_name = clean_name
+                        print(
+                            f"[{i + 1}] {display_name}{offset}(Att:{option.power}, Ult:{option.stim}, Mana:{option.mana})")
+                    print(f"[{len(player.weapons) + 1}] Retour")
                 def conf(action_input):
                     return action_input.isdigit() and 0 < int(action_input) <= len(player.weapons)+1
 

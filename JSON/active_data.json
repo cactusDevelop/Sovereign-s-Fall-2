@@ -1,41 +1,34 @@
 {
     "player": {
-        "nickname": "Joueur84",
-        "pv": 120,
+        "nickname": "Joueur57",
+        "pv": 87,
         "max_pv": 210,
-        "stim": 243,
-        "max_stim": 243,
+        "stim": 0,
+        "max_stim": 322,
         "mana": 10,
         "max_mana": 10,
         "score": 400,
         "current_level": 6,
         "weapons_inv": {
             "weapon_slot_1": {
-                "name": "Scooeaz",
-                "power": 292,
-                "stim": 70,
+                "name": "Yopy",
+                "power": 110,
+                "stim": 100,
                 "mana": 5,
-                "buff_count": 2
+                "buff_count": 1
             },
             "weapon_slot_2": {
-                "name": "Ipue",
-                "power": 50,
-                "stim": 80,
+                "name": "Urla",
+                "power": 80,
+                "stim": 50,
                 "mana": 3,
                 "buff_count": 0
             },
             "weapon_slot_3": {
-                "name": "Nrmzsn",
-                "power": 100,
-                "stim": 40,
+                "name": "\u001b[1;93mAKLS\u001b[0m",
+                "power": 110,
+                "stim": 50,
                 "mana": 4,
-                "buff_count": 0
-            },
-            "weapon_slot_4": {
-                "name": "\u001b[0;93mEDYNSEN\u001b[0m",
-                "power": 60,
-                "stim": 90,
-                "mana": 3,
                 "buff_count": 0
             }
         },
@@ -46,18 +39,28 @@
                 "value": 0
             },
             "object_slot_2": {
-                "name": "Carbonade",
-                "effect": "mana_ult_charge",
-                "value": 7
+                "name": "P'tit bouclier",
+                "effect": "shield",
+                "value": 51
+            },
+            "object_slot_3": {
+                "name": "Buff instant",
+                "effect": "att_boost",
+                "value": 59
+            },
+            "object_slot_4": {
+                "name": "Petite popo de soin",
+                "effect": "heal",
+                "value": 76
             }
         }
     },
     "used_monsters": [
-        "La grd-mère de Dimitri",
-        "Dimitri la Perdrix",
-        "Kennus Latinus",
-        "Loulou Croix-V-Baton"
+        "Le reuf de Dimitri",
+        "Loulou Croix-V-Baton",
+        "Louis IVV",
+        "La grd-mère de Dimitri"
     ],
     "cheat": false,
-    "seed": null
+    "seed": 67
 }

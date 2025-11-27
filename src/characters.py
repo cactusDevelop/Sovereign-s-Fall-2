@@ -80,6 +80,7 @@ class Player(Character):
     def mana_ult_charge(self, x):
         self.mana = min(self.mana + x, self.max_mana)
         self.stim = min(self.stim + 10*x, self.max_stim)
+        self.can_ult = (self.stim >= self.max_stim)
 
     def ult(self, target):
         if self.can_ult:

@@ -13,7 +13,7 @@ OBJECT_BLUEPRINTS = _CST_DATA.get("object_blueprints", [])
 RANDOM_LINES = _CST_DATA.get("rand_lines", [])
 WEAKNESSES = _CST_DATA.get("weaknesses", {})
 
-_GAME_CONSTANTS = _CST_DATA.get("game_constants", {})
+_GAME_CONSTANTS = _CST_DATA.get("game_cst", {})
 
 ULT_COEFFICIENT = _GAME_CONSTANTS.get("ult_coefficient", 4)
 MAX_INV_SIZE = _GAME_CONSTANTS.get("max_inv_size", 6)
@@ -37,6 +37,7 @@ PLAYER_I_MANA = _GAME_CONSTANTS.get("player_i_mana", 10)
 PLAYER_I_ULT = _GAME_CONSTANTS.get("player_i_ult", 200)
 PLAYER_SCALE = _GAME_CONSTANTS.get("player_scale", 1.16)
 PLAYER_ULT_SCALE = _GAME_CONSTANTS.get("player_ult_scale", 1.05)
+PLAYER_MANA_SCALE = _GAME_CONSTANTS.get("player_mana_scale", 1)
 
 # MONSTERS SCALING
 MONSTER_I_PV = _GAME_CONSTANTS.get("monster_i_pv", 200)
