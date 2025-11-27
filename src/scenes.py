@@ -2,6 +2,7 @@
 import random
 
 from json_manager import get_cst_names, save_hs, clear_save
+from constants import REVERSE
 from weapon import Weapon, generate_starters, gen_boss_weapon
 from musics import play_sound, stop_sound
 from characters import Monster
@@ -10,7 +11,7 @@ from fight import Fight
 from global_func import *
 from online_highscores import save_score_with_fallback
 from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE,
-                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, RED, GREEN, BLUE, CYAN)
+                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, GAME_OVER_COLOR, RED, GREEN, BLUE, CYAN, BOLD, RESET)
 
 OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
 CHEAT_WEAPON = Weapon("Mange tes morts", 9999, 9999, 0, 0)
@@ -51,8 +52,8 @@ def game_over(data,x:int,des:str):
         new_hs = save_score_with_fallback(nickname, score, level, save_hs)
         test_high = (score == new_hs)
 
-    print("\n\033[7m" + "=" * get_width())
-    print(f"\033[1m  GAME OVER\033[0;7m" + " "*(get_width()-11))
+    print(f"\n{REVERSE}" + "=" * get_width())
+    print(f"{BOLD}  GAME OVER{GAME_OVER_COLOR}" + " "*(get_width()-11))
     print(f"  Fin {x} - {des}" + " " * (get_width()-9-len(str(x))-len(des)))
     print(f"  Score - {score}" + " " * (get_width()-9-len(str(x))-len(str(score))))
     print(f"  Seed - {seed}" + " "*(get_width()-9-len(str(seed))))
@@ -61,7 +62,7 @@ def game_over(data,x:int,des:str):
     if test_high:
         print(f" >>> NEW HIGHSCORE <<<" + " "*(get_width()-22))
     print(" " * get_width() + "\n" + " " * get_width())
-    print("=" * get_width() + "\033[0m")
+    print("=" * get_width() + RESET)
 
     clear_save()
     input("\nAppuyez sur ENTER pour revenir à l'écran d'accueil")
@@ -94,7 +95,7 @@ def launch_cutscene(data):
         "\n   ⣿⣿⣿⣿⣿⣿⣿⣷⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿"
         "\n   ⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿"
         "\n"
-        "\n   Pour continuer : Appuyer sur -> \033[1mENTER <- \033[0;32m"))
+        f"\n   Pour continuer : Appuyer sur -> {BOLD}ENTER <- {RESET}"))
     wait_input()
 
     play_sound("intro")
@@ -114,7 +115,7 @@ def launch_cutscene(data):
         "      ░      ░ ░        ░     ░  ░   ░        ░  ░ ░        ░          ░       ░                  ░  ░    ░  ░    ░  ░",
         "                       ░                                                                                              ",
         "\n",
-        "\033[0m"))
+        RESET))
     slow_print(title, max(random.gauss(0.2,0.06), 0))
     wait_input()
 
@@ -146,7 +147,7 @@ def launch_cutscene(data):
         "|                                                                 |",
         "|   Je soussigné (nom, prénom)...............................     |",
         "|   accepte en toute connaissance de cause, les conditions        |",
-        "|   présentées cfr supra.                                          |",
+        "|   présentées cfr supra.                                         |",
         "|                                                                 |",
         "|_________________________________________________________________|")), 0.05)
 
@@ -167,7 +168,7 @@ def launch_cutscene(data):
         pseudo = clean_nick(input(f"\nPseudo > {CYAN}"))
         data["player"]["nickname"] = pseudo
 
-        print(f"\n {CYAN + pseudo}\033[0m : « Va te faire foutre. »")
+        print(f"\n {CYAN + pseudo + RESET} : « Va te faire foutre. »")
         wait_input()
         play_sound("laughter")
         print(f"{INCOGNITO} : « Pensez-vous avoir le choix ? »")
@@ -181,7 +182,7 @@ def launch_cutscene(data):
         data["player"]["nickname"] = pseudo
 
         quick_print((
-            "\n\033[0mIl vous voile les yeux de force. Vous entendez le claquement sourd d'une porte métallique.",
+            f"\n{RESET}Il vous voile les yeux de force. Vous entendez le claquement sourd d'une porte métallique.",
             "Une nausée commence à vous prendre... Votre tête brule... Vos tympans bourdonnent...",
             "Vous vous sentez tel un Ampèremètre branché en parallèle...",
             "Et vous perdez connaissance."))
@@ -198,10 +199,10 @@ def launch_starters_scene(data):
     nickname = data["player"]["nickname"]
 
     quick_print((
-                f"\n {CYAN + nickname}\033[0m : « ... Qu’est-ce que... Où suis-je tombé ? »",
+                f"\n {CYAN + nickname + RESET} : « ... Qu’est-ce que... Où suis-je tombé ? »",
                 "\nDevant vous, se trouvent plusieurs armes difformes éparpillées sur le sol.",
                 f"\n{INCOGNITO} : « Bienvenue dans la tête du Roi, agent {nickname} »",
-                f"{INCOGNITO} : « Votre objectif sera de le {RED}TuER\033[0m »",
+                f"{INCOGNITO} : « Votre objectif sera de le {RED}TuER{RESET} »",
                 f"{INCOGNITO} : « Pour ce faire, détruisez les fragments de son esprit que vous rencontrerez »",
                 f"{INCOGNITO} : « Choisissez une arme. »"))
 
