@@ -3,7 +3,7 @@ import random
 
 from global_func import *
 from musics import play_sound, stop_sound
-from constants import MAX_ANALYSIS, WEAKNESSES, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS, RED, BLUE, CYAN
+from constants import MAX_ANALYSIS, WEAKNESSES, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS, RED, BLUE, CYAN, RESET
 
 
 class Fight:
@@ -19,7 +19,7 @@ class Fight:
 
 
     def fight_loop(self, max_inv_size=MAX_INV_SIZE, boss_music=False):
-        print(f"\n{CYAN}{self.player.name}\033[0m engage le combat contre {RED}{self.enemy.name}\033[0m")
+        print(f"\n{CYAN + self.player.name + RESET} engage le combat contre {RED}{self.enemy.name + RESET}")
         wait_input()
         if boss_music:
             play_sound("boss", True)
@@ -139,16 +139,16 @@ class Fight:
 
 
     def enemy_turn(self):
-        print("\n" +"=" * 5 + f"| {RED}" + self.enemy.name + "'s turn" + "\033[0m |" + "=" * (get_width() - 16 - len(self.enemy.name)))
+        print("\n" +"=" * 5 + f"| {RED}" + self.enemy.name + "'s turn" + f"{RESET} |" + "=" * (get_width() - 16 - len(self.enemy.name)))
         print()
 
         if random.random() < MISS_CHANCE or self.enemy.weapon.power == 0:
             play_sound("miss-swing")
-            print(f""""{RED + self.enemy.name}\033[0m" rate lamentablement son attaque""")
+            print(f""""{RED + self.enemy.name + RESET}" rate lamentablement son attaque""")
         elif random.random() < HEAL_CHANCE:
             self.enemy.pv = min(self.enemy.pv + int(self.enemy.max_pv*HEAL_AMOUNT), self.enemy.max_pv)
             play_sound("bell")
-            print(f""""{RED + self.enemy.name}\033[0m" se régène partiellement""")
+            print(f""""{RED + self.enemy.name + RESET}" se régène partiellement""")
         else:
             self.enemy.attack(self.player)
 
@@ -181,18 +181,18 @@ class Fight:
         pv_bar = ""
         for i in range(10):
             if i < p_shield_ratio and i <= p_pv_ratio:
-                pv_bar += BLUE + "█\033[0m"
+                pv_bar += BLUE + "█" + RESET
             elif i < p_pv_ratio:
                 pv_bar += "█"
             elif p_pv_ratio < i < p_shield_ratio:
-                pv_bar += BLUE + "▄\033[0m"
+                pv_bar += BLUE + "▄" + RESET
             else:
                 pv_bar += "_"
 
         line_0 = f"\n NIVEAU {self.level}"
-        line_1 = "=" * 5 + f"| {CYAN}" + self.player.name + "'s turn" + "\033[0m |" + "=" * (get_width() - 16 - len(self.player.name))
-        line_2 = " " * left_offset + CYAN + self.player.name.upper() + "\033[0m" + " " * (get_width() // 2 - len(self.player.name))
-        line_2 += RED + "FRAGMENTUS " + self.enemy.name.upper() + "\033[0m"
+        line_1 = "=" * 5 + f"| {CYAN}" + self.player.name + "'s turn" + f"{RESET} |" + "=" * (get_width() - 16 - len(self.player.name))
+        line_2 = " " * left_offset + CYAN + self.player.name.upper() + RESET + " " * (get_width() // 2 - len(self.player.name))
+        line_2 += RED + "FRAGMENTUS " + self.enemy.name.upper() + RESET
         line_3 = " "*left_offset + pv_bar + " | " + str(self.player.pv) + "/" + str(self.player.max_pv) +" PV"
         if self.player.shield_pv > 0:
             line_3 += f" [Bouclier {self.player.shield_pv}PV]"
