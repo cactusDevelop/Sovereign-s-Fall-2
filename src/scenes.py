@@ -279,7 +279,7 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
 
     if is_bossfight:
         print("\nBoss puissant en approche !")
-        print(f"\nAttention ! La puissance du boss affecte votre régénération.")
+        print(f"Attention ! La puissance du boss affecte votre régénération.")
         boss_name = f"BOSS {random.choice(BOSS_NAMES).upper()}"
 
         boss_pv = int(BOSS_I_PV*BOSS_SCALE**difficulty)

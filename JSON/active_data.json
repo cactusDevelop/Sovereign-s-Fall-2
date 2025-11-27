@@ -1,14 +1,14 @@
 {
     "player": {
         "nickname": "ALex",
-        "pv": 156,
-        "max_pv": 156,
+        "pv": 165,
+        "max_pv": 243,
         "stim": 0,
-        "max_stim": 231,
+        "max_stim": 268,
         "mana": 10,
         "max_mana": 10,
-        "current_level": 4,
-        "score": 220,
+        "current_level": 7,
+        "score": 520,
         "weapons_inv": {
             "weapon_slot_1": {
                 "name": "Tiioyef",
@@ -26,7 +26,14 @@
             },
             "weapon_slot_3": {
                 "name": "Soepsik",
-                "power": 70,
+                "power": 123,
+                "stim": 80,
+                "mana": 5,
+                "buff_count": 1
+            },
+            "weapon_slot_4": {
+                "name": "\u001b[0;93mOOSENTO\u001b[0m",
+                "power": 90,
                 "stim": 80,
                 "mana": 5,
                 "buff_count": 0
@@ -39,26 +46,38 @@
                 "value": 0
             },
             "object_slot_2": {
-                "name": "Petite popo de soin",
-                "effect": "heal",
-                "value": 79
-            },
-            "object_slot_3": {
-                "name": "P'tit bouclier",
-                "effect": "shield",
-                "value": 58
-            },
-            "object_slot_4": {
                 "name": "Carbonade",
                 "effect": "mana_ult_charge",
                 "value": 9
+            },
+            "object_slot_3": {
+                "name": "Vol-au-vent",
+                "effect": "mana_ult_charge",
+                "value": 3
+            },
+            "object_slot_4": {
+                "name": "Grande popo de soin",
+                "effect": "heal",
+                "value": 157
+            },
+            "object_slot_5": {
+                "name": "Ama-no-Iwato",
+                "effect": "shield",
+                "value": 84
+            },
+            "object_slot_6": {
+                "name": "Petite popo de soin",
+                "effect": "heal",
+                "value": 81
             }
         }
     },
     "used_monsters": [
         "Fred de la ville de Waterloo",
         "Ken Hasselmanette",
-        "Thomas Sauvage"
+        "Thomas Sauvage",
+        "Boegart Hangar",
+        "Kennus Latinus"
     ],
     "cheat": false,
     "seed": 6652391

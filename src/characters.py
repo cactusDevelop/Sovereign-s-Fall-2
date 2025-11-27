@@ -88,11 +88,14 @@ class Player(Character):
         if self.can_ult:
             show_ult_animation()
 
-            dgt = 1
-            for weapon in self.weapons:
-                dgt *= max(weapon.power,1)
+            powers = [weapon.power for weapon in self.weapons]
+            geo = 1
+            for p in powers:
+                geo *= max(p,1)
+            geo = geo**(1/len(powers))
+            ari = sum(powers) / len(powers)
 
-            dgt = int(ULT_COEFFICIENT*(dgt**(1/len(self.weapons)))*target.nerf_defense)
+            dgt = int((0.7*geo+0.3*ari)*ULT_COEFFICIENT*target.nerf_defense)
 
             old_pv = target.pv
             target.pv = max((target.pv - dgt), 0)
@@ -100,7 +103,7 @@ class Player(Character):
             if target.pv == 0:
                 overkill = dgt - old_pv
 
-            print(f"Vos armes s'unissent et attaquent de {dgt} dégats !")
+            print(f"\nVos armes s'unissent et attaquent de {dgt} dégats !")
 
             self.can_ult = False
             self.stim = 0
