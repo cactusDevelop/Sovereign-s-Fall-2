@@ -3,7 +3,7 @@ import random
 
 from global_func import *
 from musics import play_sound, stop_sound
-from constants import MAX_ANALYSIS, WEAKNESSES, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS, RED, BLUE, CYAN, RESET
+from constants import MAX_ANALYSIS, WEAKNESSES, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS, RED, BLUE, CYAN, GOLD, RESET
 
 
 class Fight:
@@ -38,6 +38,8 @@ class Fight:
                 play_sound("bell")
             elif p_turn_conclu == "Ana":
                 play_sound("bell")
+            elif p_turn_conclu == "Pass":
+                play_sound("hmm")
             elif p_turn_conclu == "gameover2":
                 return "gameover2"
             elif p_turn_conclu is None:
@@ -130,6 +132,11 @@ class Fight:
 
             self.player.mana = min(self.player.mana + 1, self.player.max_mana)
             return "Ult"
+
+        elif instruction == "Passer":
+            print("\nImpuissant, vous passez votre tour")
+            self.player.mana = min(self.player.mana + 1, self.player.max_mana)
+            return "Pass"
 
         elif instruction == "sus":
             return "gameover2"
@@ -291,9 +298,9 @@ class Fight:
                     self.display_status()
                     print("="*15 + "Armes" + "="*15)
 
-                    max_len = max(len(w.name.replace('\033[0;93m', '').replace('\033[0m', '')) for w in player.weapons)
+                    max_len = max(len(w.name.replace(GOLD, '').replace(RESET, '')) for w in player.weapons)
                     for i, option in enumerate(player.weapons):
-                        clean_name = option.name.replace('\033[0;93m', '').replace('\033[0m', '') # Tt ça à cause du boss
+                        clean_name = option.name.replace(GOLD, '').replace(RESET, '') # Tt ça à cause du boss
                         offset = " " * (max_len+2-len(clean_name))
                         print(f"[{i+1}] {option.name}{offset}(Att:{option.power}, Ult:{option.stim}, Mana:{option.mana})")
                     print(f"[{len(player.weapons)+1}] Retour")
@@ -322,11 +329,12 @@ class Fight:
                             else "[DEBUG] Effet défaillant"
 
                         max_len = max(len(o.name) for o in player.inventory)
-                        index_display = f"[{i+1}] " if i < 9 else f"[{i+1}]"
+                        index_prefix = " " if (i < 9 and len(player.inventory) >= 10) else ""
                         offset = " " * (max_len + 2 - len(option.name))
-                        print(f"{index_display} {option.name}{offset}(Effet: {effect})")
+                        print(f"{index_prefix}[{i + 1}] {option.name}{offset}(Effet: {effect})")
 
-                    print(f"[{len(player.inventory) + 1}]  Retour")
+                    retour_prefix = " " if len(player.inventory) >= 9 else ""
+                    print(f"{retour_prefix}[{len(player.inventory) + 1}] Retour")
                 def conf(action_input):
                     return action_input.isdigit() and 0 < int(action_input) <= len(player.inventory)+1
 
@@ -342,6 +350,9 @@ class Fight:
 
             elif current_pos == "Ultime":
                 return "Ultime", 0
+
+            elif current_pos == "Passer":
+                return "Passer", 0
 
             elif current_pos == "Info":
                 print("=" * 10 + "Vaincre des Fragmentus" + "=" * 10)

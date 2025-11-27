@@ -1,21 +1,21 @@
 {
     "player": {
         "nickname": "Joueur84",
-        "pv": 93,
-        "max_pv": 115,
-        "stim": 140,
-        "max_stim": 210,
+        "pv": 120,
+        "max_pv": 210,
+        "stim": 243,
+        "max_stim": 243,
         "mana": 10,
         "max_mana": 10,
-        "score": 120,
-        "current_level": 2,
+        "score": 400,
+        "current_level": 6,
         "weapons_inv": {
             "weapon_slot_1": {
                 "name": "Scooeaz",
-                "power": 80,
+                "power": 292,
                 "stim": 70,
                 "mana": 5,
-                "buff_count": 0
+                "buff_count": 2
             },
             "weapon_slot_2": {
                 "name": "Ipue",
@@ -30,6 +30,13 @@
                 "stim": 40,
                 "mana": 4,
                 "buff_count": 0
+            },
+            "weapon_slot_4": {
+                "name": "\u001b[0;93mEDYNSEN\u001b[0m",
+                "power": 60,
+                "stim": 90,
+                "mana": 3,
+                "buff_count": 0
             }
         },
         "objects_inv": {
@@ -39,14 +46,17 @@
                 "value": 0
             },
             "object_slot_2": {
-                "name": "Petite popo de soin",
-                "effect": "heal",
-                "value": 61
+                "name": "Carbonade",
+                "effect": "mana_ult_charge",
+                "value": 7
             }
         }
     },
     "used_monsters": [
-        "La grd-mère de Dimitri"
+        "La grd-mère de Dimitri",
+        "Dimitri la Perdrix",
+        "Kennus Latinus",
+        "Loulou Croix-V-Baton"
     ],
     "cheat": false,
     "seed": null

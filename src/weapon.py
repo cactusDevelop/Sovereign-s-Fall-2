@@ -2,7 +2,7 @@
 from random import shuffle, randint, gauss, choice
 from constants import (CLASSIC_N, OP_N, NUM_CLASSIC_STARTER, NUM_OP_STARTER,
                        WEAPON_MIN_MANA, WEAPON_MAX_MANA, NAME_MIN_LETTER,
-                       NAME_MAX_LETTER, GEN_ATTEMPTS, ALPHABET)
+                       NAME_MAX_LETTER, GEN_ATTEMPTS, ALPHABET, GOLD, RESET)
 
 starters_list = []
 
@@ -56,7 +56,7 @@ def create_weapon(x:int):
         return Weapon(name, stats[0], stats[1], stats[2], 0)
 
 def gen_boss_weapon(lvl):
-    b_name = "\033[0;93m"+rand_names().upper()+"\033[0m"
+    b_name = GOLD + rand_names().upper() + RESET
     stats = rand_stats(10+(lvl//2))
     return Weapon(b_name, stats[0], stats[1], stats[2], 0)
 

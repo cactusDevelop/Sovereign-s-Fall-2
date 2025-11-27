@@ -2,7 +2,6 @@
 import random
 
 from json_manager import get_cst_names, save_hs, clear_save
-from constants import REVERSE
 from weapon import Weapon, generate_starters, gen_boss_weapon
 from musics import play_sound, stop_sound
 from characters import Monster
@@ -11,7 +10,7 @@ from fight import Fight
 from global_func import *
 from online_highscores import save_score_with_fallback
 from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE,
-                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, GAME_OVER_COLOR, RED, GREEN, BLUE, CYAN, BOLD, RESET)
+                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, REV_WHITE, RED, GREEN, BLUE, CYAN, BOLD, RESET)
 
 OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
 CHEAT_WEAPON = Weapon("Mange tes morts", 9999, 9999, 0, 0)
@@ -52,8 +51,8 @@ def game_over(data,x:int,des:str):
         new_hs = save_score_with_fallback(nickname, score, level, save_hs)
         test_high = (score == new_hs)
 
-    print(f"\n{REVERSE}" + "=" * get_width())
-    print(f"{BOLD}  GAME OVER{GAME_OVER_COLOR}" + " "*(get_width()-11))
+    print(f"\n{REV_WHITE}" + "=" * get_width())
+    print(f"{BOLD}  GAME OVER{REV_WHITE}" + " " * (get_width() - 11))
     print(f"  Fin {x} - {des}" + " " * (get_width()-9-len(str(x))-len(des)))
     print(f"  Score - {score}" + " " * (get_width()-9-len(str(x))-len(str(score))))
     print(f"  Seed - {seed}" + " "*(get_width()-9-len(str(seed))))

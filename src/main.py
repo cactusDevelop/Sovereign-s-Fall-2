@@ -47,7 +47,7 @@ from global_func import *
 from musics import play_sound, stop_sound
 from online_highscores import get_online_highscore, get_online_leaderboard
 from scenes import launch_cutscene, launch_starters_scene, launch_tuto_fight, game_over
-from constants import _HS, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, YELLOW, RESET
+from constants import _HS, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, REV_YELLOW, RESET
 
 
 # CACHER LES MESSAGES D'ERREUR IN FINE
@@ -77,7 +77,7 @@ def display_menu():
         try:   # [BALISE ONLINE HIGHSCORES]
             online_hs = get_online_highscore()
             if online_hs > 0:
-                line_2 = f"░█{YELLOW} RECORD MONDIAL : {online_hs} {RESET}░█"
+                line_2 = f"░█{REV_YELLOW} RECORD MONDIAL : {online_hs} {RESET}░█"
 
                 print("\n ░█"+"█"*(len(line_2)-15))
                 print(line_2)
