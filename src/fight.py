@@ -3,16 +3,7 @@ import random
 
 from global_func import *
 from musics import play_sound, stop_sound
-from constants import MAX_ANALYSIS, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS
-
-
-red = "\033[1;31m"
-blue = "\033[0;34m"
-cyan = "\033[1;36m"
-
-with open("JSON/cst_data.json", "r", encoding="utf-8") as read_file:
-    cst = json.load(read_file)
-    WEAKNESSES = cst.get("weaknesses", {})
+from constants import MAX_ANALYSIS, WEAKNESSES, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS, RED, BLUE, CYAN
 
 
 class Fight:
@@ -28,7 +19,7 @@ class Fight:
 
 
     def fight_loop(self, max_inv_size=MAX_INV_SIZE, boss_music=False):
-        print(f"\n{cyan}{self.player.name}\033[0m engage le combat contre {red}{self.enemy.name}\033[0m")
+        print(f"\n{CYAN}{self.player.name}\033[0m engage le combat contre {RED}{self.enemy.name}\033[0m")
         wait_input()
         if boss_music:
             play_sound("boss", True)
@@ -148,16 +139,16 @@ class Fight:
 
 
     def enemy_turn(self):
-        print("\n"+"="*5 + f"| {red}" + self.enemy.name + "'s turn"+"\033[0m |" + "="*(get_width()-16-len(self.enemy.name)))
+        print("\n" +"=" * 5 + f"| {RED}" + self.enemy.name + "'s turn" + "\033[0m |" + "=" * (get_width() - 16 - len(self.enemy.name)))
         print()
 
         if random.random() < MISS_CHANCE or self.enemy.weapon.power == 0:
             play_sound("miss-swing")
-            print(f""""{red+ self.enemy.name}\033[0m" rate lamentablement son attaque""")
+            print(f""""{RED + self.enemy.name}\033[0m" rate lamentablement son attaque""")
         elif random.random() < HEAL_CHANCE:
             self.enemy.pv = min(self.enemy.pv + int(self.enemy.max_pv*HEAL_AMOUNT), self.enemy.max_pv)
             play_sound("bell")
-            print(f""""{red+ self.enemy.name}\033[0m" se régène partiellement""")
+            print(f""""{RED + self.enemy.name}\033[0m" se régène partiellement""")
         else:
             self.enemy.attack(self.player)
 
@@ -190,18 +181,18 @@ class Fight:
         pv_bar = ""
         for i in range(10):
             if i < p_shield_ratio and i <= p_pv_ratio:
-                pv_bar += blue + "█\033[0m"
+                pv_bar += BLUE + "█\033[0m"
             elif i < p_pv_ratio:
                 pv_bar += "█"
             elif p_pv_ratio < i < p_shield_ratio:
-                pv_bar += blue + "▄\033[0m"
+                pv_bar += BLUE + "▄\033[0m"
             else:
                 pv_bar += "_"
 
         line_0 = f"\n NIVEAU {self.level}"
-        line_1 = "=" * 5 + f"| {cyan}" + self.player.name + "'s turn" + "\033[0m |" + "="*(get_width()-16-len(self.player.name))
-        line_2 = " "*left_offset + cyan + self.player.name.upper() + "\033[0m" + " "*(get_width()//2-len(self.player.name))
-        line_2 += red + "FRAGMENTUS " + self.enemy.name.upper() + "\033[0m"
+        line_1 = "=" * 5 + f"| {CYAN}" + self.player.name + "'s turn" + "\033[0m |" + "=" * (get_width() - 16 - len(self.player.name))
+        line_2 = " " * left_offset + CYAN + self.player.name.upper() + "\033[0m" + " " * (get_width() // 2 - len(self.player.name))
+        line_2 += RED + "FRAGMENTUS " + self.enemy.name.upper() + "\033[0m"
         line_3 = " "*left_offset + pv_bar + " | " + str(self.player.pv) + "/" + str(self.player.max_pv) +" PV"
         if self.player.shield_pv > 0:
             line_3 += f" [Bouclier {self.player.shield_pv}PV]"

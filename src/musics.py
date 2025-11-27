@@ -9,12 +9,11 @@ SFX issus de Pixabay
 
 import os, random, pygame
 
-
-NOMBRE_CHANNEL = 10
+from constants import CHANNEL_NUMBER
 
 
 pygame.mixer.init()
-pygame.mixer.set_num_channels(NOMBRE_CHANNEL)
+pygame.mixer.set_num_channels(CHANNEL_NUMBER)
 
 
 def play_sound(which, is_bg=False):

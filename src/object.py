@@ -1,18 +1,7 @@
 
-import json
-
 from random import choices, randint, uniform
 from global_func import solid_input
-
-with open("JSON/cst_data.json", "r", encoding="utf-8") as read_file:
-    cst_data = json.load(read_file)
-    OBJECT_BLUEPRINTS = cst_data.get("object_blueprints", [])
-    GAME_CST = cst_data.get("game_cst", {})
-
-MAX_INV_SIZE = GAME_CST["max_inv_size"]
-OBJECT_SCALE = GAME_CST["object_scale"]
-OBJECT_SCALE_SLOWDOWN = GAME_CST["object_scale_slowdown"]
-SHIELD_NERF = GAME_CST["shield_nerf"]
+from constants import OBJECT_BLUEPRINTS, OBJECT_SCALE, OBJECT_SCALE_SLOWDOWN, SHIELD_NERF
 
 
 class Object:

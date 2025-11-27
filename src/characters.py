@@ -3,11 +3,8 @@ import os, time
 
 from global_func import get_width, clear_console
 from musics import play_sound
-from constants import ULT_COEFFICIENT
+from constants import ULT_COEFFICIENT, RED, CYAN
 
-
-red = "\033[1;31m"
-cyan = "\033[1;36m"
 
 class Character:
     def __init__(self, name: str, pv: int, max_pv:int):
@@ -26,7 +23,7 @@ class Character:
             if target.pv == 0:
                 overkill = int(self.weapon.power*target.nerf_defense)-old_pv
 
-            print(f"""Arme "{cyan + self.weapon.name}\033[0m" inflige {self.weapon.power} dégats à "{red + target.name}\033[0m" ({target.pv} PV restants)""")
+            print(f"""Arme "{CYAN + self.weapon.name}\033[0m" inflige {self.weapon.power} dégats à "{RED + target.name}\033[0m" ({target.pv} PV restants)""")
             return overkill
 
 
@@ -138,16 +135,16 @@ class Player(Character):
         if self.shield_pv > 0:
             if damage >= self.shield_pv:
                 self.shield_pv = 0
-                print(f"""Arme "{red + weapon_name}\033[0m" détruit votre Bouclier""")
+                print(f"""Arme "{RED + weapon_name}\033[0m" détruit votre Bouclier""")
                 play_sound("drop-shield")
             else:
                 self.shield_pv = self.shield_pv - damage
-                print(f"""Arme "{red + weapon_name}\033[0m" inflige {damage} dégats au bouclier ({cyan + str(self.shield_pv)}\033[0m PV bouclier restants)""")
+                print(f"""Arme "{RED + weapon_name}\033[0m" inflige {damage} dégats au bouclier ({CYAN + str(self.shield_pv)}\033[0m PV bouclier restants)""")
                 play_sound("shield")
 
         else:
             self.pv = max(self.pv - damage, 0)
-            print(f"""Arme "{red + weapon_name}\033[0m" inflige {damage} dégats à "{cyan + self.name}\033[0m" ({self.pv} PV restants)""")
+            print(f"""Arme "{RED + weapon_name}\033[0m" inflige {damage} dégats à "{CYAN + self.name}\033[0m" ({self.pv} PV restants)""")
             play_sound("monster-attack")
 
 

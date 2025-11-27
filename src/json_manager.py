@@ -4,26 +4,20 @@ import json
 from characters import Player
 from weapon import Weapon
 from object import Object
-
-
-# CONSTANTS
-with open("JSON/cst_data.json", "r", encoding="utf-8") as read_cst:
-    cst = json.load(read_cst)
-with open("JSON/highscores.json", "r", encoding="utf-8") as read_hs:
-    hs = json.load(read_hs)
+from constants import _CST_DATA, _HS
 
 
 def get_cst_names():
-    return cst["monster_names"], cst["boss_names"], cst["weapon_names"]
+    return _CST_DATA["monster_names"], _CST_DATA["boss_names"], _CST_DATA["weapon_names"]
 
 def save_hs(nickname, score, level):
-    hs["history"].append({"nickname": nickname, "score": int(score), "level": int(level)})
-    hs["history"] = sorted(hs["history"], key=lambda x: x["score"], reverse=True)[:10]
-    if score > hs["highscore"]:
-        hs["highscore"] = score
+    _HS["history"].append({"nickname": nickname, "score": int(score), "level": int(level)})
+    _HS["history"] = sorted(_HS["history"], key=lambda x: x["score"], reverse=True)[:10]
+    if score > _HS["highscore"]:
+        _HS["highscore"] = score
     with open("JSON/highscores.json", "w", encoding="utf-8") as write_file:
-        json.dump(hs, write_file, ensure_ascii=False, indent=4)
-    return hs["highscore"]
+        json.dump(_HS, write_file, ensure_ascii=False, indent=4)
+    return _HS["highscore"]
 
 
 # SAVED VARIABLES

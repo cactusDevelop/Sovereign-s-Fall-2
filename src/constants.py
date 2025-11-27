@@ -3,6 +3,8 @@ import json
 
 with open("JSON/cst_data.json", "r", encoding="utf-8") as read_file:
     _CST_DATA = json.load(read_file)
+with open("JSON/highscores.json", "r", encoding="utf-8") as read_hs:
+    _HS = json.load(read_hs)
 
 MONSTER_NAMES = _CST_DATA.get("monster_names", [])
 BOSS_NAMES = _CST_DATA.get("boss_names", [])
@@ -26,6 +28,7 @@ HEAL_AMOUNT = _GAME_CONSTANTS.get("heal_amount", 0.1)
 MAX_ANALYSIS = _GAME_CONSTANTS.get("max_analysis", 1)
 MAX_WEAPON_SLOTS = _GAME_CONSTANTS.get("max_weapon_slots", 3)
 OVERKILL_MULT = _GAME_CONSTANTS.get("overkill_score_multiplier", 2)
+CHANNEL_NUMBER = _GAME_CONSTANTS.get("channel_number", 10)
 CHEAT_CODE = _GAME_CONSTANTS.get("cheat_code", "zahoe")
 
 # PLAYER SCALING
@@ -54,3 +57,21 @@ WEAPON_MAX_MANA = _GAME_CONSTANTS.get("weapon_max_mana", 5)
 NAME_MIN_LETTER = _GAME_CONSTANTS.get("name_min_letter", 4)
 NAME_MAX_LETTER = _GAME_CONSTANTS.get("name_max_letter", 7)
 GEN_ATTEMPTS = _GAME_CONSTANTS.get("gen_attempts", 111)
+
+# PYTHON CST
+INCOGNITO = " \033[1;32m???\033[0m"
+ALPHABET = 'a' * 82 + 'b' * 10 + 'c' * 32 + 'd' * 37 + 'e' * 150 + 'f' * 11 + 'g' * 10 + 'h' * 9 + 'i' * 73 + 'j' * 5 + 'k' * 30 + 'l' * 57 + 'm' * 29 + 'n' * 40 + 'o' * 53 + 'p' * 28 + 'q' * 12 + 'r' * 66 + 's' * 81 + 't' * 50 + 'u' * 64 + 'v' * 16 + 'w' * 0 + 'x' * 4 + 'y' * 80 + 'z' * 2
+
+RED = "\033[1;31m"
+GREEN = "\033[1;32m"
+YELLOW = "\033[33;7m"
+CYAN = "\033[1;36m"
+CHEAT_COLOR = "\033[42m"
+BLUE = "\033[1;94m"
+GOLD = "\033[38;5;220m"
+SILVER = "\033[38;5;250m"
+BRONZE = "\033[38;5;208m"
+
+BOLD = "\033[1m"
+
+RESET = "\033[0m"

@@ -2,13 +2,9 @@
 from random import shuffle, randint, gauss, choice
 from constants import (CLASSIC_N, OP_N, NUM_CLASSIC_STARTER, NUM_OP_STARTER,
                        WEAPON_MIN_MANA, WEAPON_MAX_MANA, NAME_MIN_LETTER,
-                       NAME_MAX_LETTER, GEN_ATTEMPTS)
-
-
+                       NAME_MAX_LETTER, GEN_ATTEMPTS, ALPHABET)
 
 starters_list = []
-alphabet = 'a'*82+'b'*10+'c'*32+'d'*37+'e'*150+'f'*11+'g'*10+'h'*9+'i'*73+'j'*5+'k'*30+'l'*57+'m'*29+'n'*40+'o'*53+'p'*28+'q'*12+'r'*66+'s'*81+'t'*50+'u'*64+'v'*16+'w'*0+'x'*4+'y'*80+'z'*2
-
 
 class Weapon:
 
@@ -31,9 +27,9 @@ class Weapon:
 
 def rand_names():
     x = randint(NAME_MIN_LETTER,NAME_MAX_LETTER)
-    n = choice(alphabet).upper()
+    n = choice(ALPHABET).upper()
     for _ in range(x-1):
-        n += (choice(alphabet))
+        n += (choice(ALPHABET))
     if n != "GILIS": # Trouver la seed qui génère cette pépite (pas assez de g)
         return n
     else:

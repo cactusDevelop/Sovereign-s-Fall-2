@@ -47,7 +47,7 @@ from global_func import *
 from musics import play_sound, stop_sound
 from online_highscores import get_online_highscore, get_online_leaderboard
 from scenes import launch_cutscene, launch_starters_scene, launch_tuto_fight, game_over
-from constants import OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE
+from constants import _HS, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, YELLOW, RESET
 
 
 # CACHER LES MESSAGES D'ERREUR IN FINE
@@ -68,24 +68,24 @@ def display_menu():
     def to_display_m():
         if not pygame.mixer.music.get_busy():
             play_sound("menu", True)
-        print("\n" + "="*5 + "| \033[1mMAIN MENU\033[0m |" + "="*(get_width()-18))
+        print("\n" + "="*5 + f"| {BOLD}MAIN MENU{RESET} |" + "="*(get_width()-18))
 
         if data.get("cheat", False):
-            print("\n\033[42m >>> MODE CHEAT ACTIF <<< \033[0m")
+            print(f"\n{CHEAT_COLOR} >>> MODE CHEAT ACTIF <<< {RESET}")
             print("*Nouvelle partie sans cheat*")
 
         try:   # [BALISE ONLINE HIGHSCORES]
             online_hs = get_online_highscore()
             if online_hs > 0:
-                line_2 = f"░█\033[33;7m RECORD MONDIAL : {online_hs} \033[0m░█"
+                line_2 = f"░█{YELLOW} RECORD MONDIAL : {online_hs} {RESET}░█"
 
                 print("\n ░█"+"█"*(len(line_2)-15))
                 print(line_2)
                 print(" ░█" + "█"*(len(line_2)-15))
         except:
-            if hs["highscore"] > 0:
+            if _HS["highscore"] > 0:
                 print("\n " + "_" * 10)
-                print(f"| TOP LOCAL : {hs['highscore']}")
+                print(f"| TOP LOCAL : {_HS['highscore']}")
                 print("|" + "_" * 20)
 
 
@@ -102,7 +102,7 @@ def display_menu():
     direc = solid_input(conf_m, to_display_m)
 
     if direc == CHEAT_CODE:
-        print("\n\033[42m >>> CHEAT MODE ACTIF <<< \033[0m")
+        print(f"\n{CHEAT_COLOR} >>> CHEAT MODE ACTIF <<< {RESET}")
         play_sound("win")
         time.sleep(2.5)
         data["cheat"] = True
@@ -116,12 +116,7 @@ def display_menu():
 
 
 def show_hs():  # [BALISE ONLINE HIGHSCORES]
-    print("\n" + "=" * 5 + "| \033[1mALL TIME TOP 10\033[0m |" + "=" * (get_width() - 24))
-
-    GOLD = "\033[38;5;220m"
-    SILVER = "\033[38;5;250m"
-    BRONZE = "\033[38;5;208m"
-    RESET = "\033[0m"
+    print("\n" + "=" * 5 + f"| {BOLD}ALL TIME TOP 10{RESET} |" + "=" * (get_width() - 24))
 
     try:
         online_scores = get_online_leaderboard()
@@ -152,12 +147,12 @@ def show_hs():  # [BALISE ONLINE HIGHSCORES]
 
                 print(f"{medal} {rank:2}) {color}{nickname_display:<20}{RESET} - {score_info}{date_display}")
     except:
-        print("⚠ Impossible de récupérer les scores en ligne")
+        print("Impossible de récupérer les scores en ligne")
         print("\n--- SCORES LOCAUX ---")
-        if not hs["history"]:
+        if not _HS["history"]:
             print("Aucun score local...")
         else:
-            for rank, entry in enumerate(hs["history"], 1):
+            for rank, entry in enumerate(_HS["history"], 1):
                 nickname = str(entry['nickname'])[:20]
                 score_info = f"{entry['score']} pts (niveau {entry['level']})"
                 print(f"   {rank:2}) {nickname:<20} - {score_info}")
@@ -264,7 +259,7 @@ if __name__ == "__main__":
         elif menu_to == 4:
             clear_console()
             def to_display():
-                print("\n" + "=" * 5 + "| \033[1mDEV MODE\033[0m |" + "=" * (get_width() - 17))
+                print("\n" + "=" * 5 + f"| {BOLD}DEV MODE{RESET} |" + "=" * (get_width() - 17))
                 print("\nVeuillez entrer la seed désirée (0 pour retour)")
             def conf(x):
                 return x.isdigit() or (x.startswith("-") and x[1:].isdigit())

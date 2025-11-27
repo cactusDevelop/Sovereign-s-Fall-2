@@ -9,18 +9,12 @@ from object import Object, get_rand_obj
 from fight import Fight
 from global_func import *
 from online_highscores import save_score_with_fallback
-from constants import (MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE,
-                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES)
+from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE,
+                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, RED, GREEN, BLUE, CYAN)
 
 OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
 CHEAT_WEAPON = Weapon("Mange tes morts", 9999, 9999, 0, 0)
 MAX_NAME_SIZE = get_width()//3
-
-incognito = " \033[1;32m???\033[0m"
-red = "\033[1;31m"
-green = "\033[1;32m"
-cyan = "\033[1;36m"
-blue = "\033[1;94m"
 
 
 def clean_nick(nickname):
@@ -84,7 +78,7 @@ def launch_cutscene(data):
     seed = data.get("seed")
 
     print((
-        f"\n{green}"
+        f"\n{GREEN}"
         "\n *sauvegarde auto*"
         f"\n seed : {seed}"
         "\n"
@@ -105,7 +99,7 @@ def launch_cutscene(data):
 
     play_sound("intro")
     title = center_txt((
-        f"{blue}\n",
+        f"{BLUE}\n",
         "\n",
         "\n",
         "\n",
@@ -129,7 +123,7 @@ def launch_cutscene(data):
     quick_print((
         "\nVous vous réveillez dans un pièce sombre qui vous est inconnue.",
         "Un homme tout de noir vêtu vous tend un parchemin.",
-        f"\n{incognito} : « Complétez ceci »"))
+        f"\n{INCOGNITO} : « Complétez ceci »"))
     play_sound("paper-collect")
     slow_print(center_txt((
         " _________________________________________________________________ ",
@@ -156,11 +150,11 @@ def launch_cutscene(data):
         "|                                                                 |",
         "|_________________________________________________________________|")), 0.05)
 
-    print(f"\n{incognito} : « Avez-vous lu et accepté ce contrat » ")
+    print(f"\n{INCOGNITO} : « Avez-vous lu et accepté ce contrat » ")
 
     def to_display():
-        print(f"\n{incognito} : « Nous réitérons notre demande... »")
-        print(f"{incognito} : « Acceptez-vous ce contrat » (oui/non)")
+        print(f"\n{INCOGNITO} : « Nous réitérons notre demande... »")
+        print(f"{INCOGNITO} : « Acceptez-vous ce contrat » (oui/non)")
         play_sound("hmm")
     def conf(action_input):
         return action_input.lower() in ["oui", "non"]
@@ -170,18 +164,18 @@ def launch_cutscene(data):
         agreement = solid_input(conf,to_display)
 
     if agreement.lower() == "non":
-        pseudo = clean_nick(input(f"\nPseudo > {cyan}"))
+        pseudo = clean_nick(input(f"\nPseudo > {CYAN}"))
         data["player"]["nickname"] = pseudo
 
-        print(f"\n {cyan + pseudo}\033[0m : « Va te faire foutre. »")
+        print(f"\n {CYAN + pseudo}\033[0m : « Va te faire foutre. »")
         wait_input()
         play_sound("laughter")
-        print(f"{incognito} : « Pensez-vous avoir le choix ? »")
+        print(f"{INCOGNITO} : « Pensez-vous avoir le choix ? »")
         time.sleep(2)
         return False
 
     else:
-        pseudo = clean_nick(input(f"\nSignature (pseudo) > {cyan}"))
+        pseudo = clean_nick(input(f"\nSignature (pseudo) > {CYAN}"))
         play_sound("handwriting")
         play_sound("door-shut")
         data["player"]["nickname"] = pseudo
@@ -204,20 +198,20 @@ def launch_starters_scene(data):
     nickname = data["player"]["nickname"]
 
     quick_print((
-                f"\n {cyan + nickname}\033[0m : « ... Qu’est-ce que... Où suis-je tombé ? »",
+                f"\n {CYAN + nickname}\033[0m : « ... Qu’est-ce que... Où suis-je tombé ? »",
                 "\nDevant vous, se trouvent plusieurs armes difformes éparpillées sur le sol.",
-                f"\n{incognito} : « Bienvenue dans la tête du Roi, agent {nickname} »",
-                f"{incognito} : « Votre objectif sera de le {red}TuER\033[0m »",
-                f"{incognito} : « Pour ce faire, détruisez les fragments de son esprit que vous rencontrerez »",
-                f"{incognito} : « Choisissez une arme. »"))
+                f"\n{INCOGNITO} : « Bienvenue dans la tête du Roi, agent {nickname} »",
+                f"{INCOGNITO} : « Votre objectif sera de le {RED}TuER\033[0m »",
+                f"{INCOGNITO} : « Pour ce faire, détruisez les fragments de son esprit que vous rencontrerez »",
+                f"{INCOGNITO} : « Choisissez une arme. »"))
 
     print()
     weapon_slot_1 = choose_starter(starters)
     starters.remove(weapon_slot_1)
     play_sound("bell")
 
-    quick_print((f"\n{incognito} : « Ah, j'ai oublié de préciser que vous pourrez faire une attaque combinée... »",
-                f"{incognito} : « Donc vous aurez besoin de deux autres armes supplémentaires. »"))
+    quick_print((f"\n{INCOGNITO} : « Ah, j'ai oublié de préciser que vous pourrez faire une attaque combinée... »",
+                f"{INCOGNITO} : « Donc vous aurez besoin de deux autres armes supplémentaires. »"))
 
     print("\n <2e arme>")
     weapon_slot_2 = choose_starter(starters)
@@ -229,15 +223,15 @@ def launch_starters_scene(data):
     starters.remove(weapon_slot_3)
     play_sound("bell")
 
-    quick_print((f"\n{incognito} : « Je te donne un dernier objet : un sac dans lequel tu devras mettre tes trouvailles »",
-               f"{incognito} : « Tu n'es pas le premier à t'en servir c'est pour ça qu'il y a quelques déchets dedans »"))
+    quick_print((f"\n{INCOGNITO} : « Je te donne un dernier objet : un sac dans lequel tu devras mettre tes trouvailles »",
+               f"{INCOGNITO} : « Tu n'es pas le premier à t'en servir c'est pour ça qu'il y a quelques déchets dedans »"))
     play_sound("bell")
     data["player"]["objects_inv"] =  {"object_slot_1":{"name": OBJ_STARTER.name, "effect": OBJ_STARTER.effect, "value": OBJ_STARTER.value}}
 
     selected_weapons = [weapon_slot_1,weapon_slot_2,weapon_slot_3]
 
     if data.get("cheat", False):
-        print(f"\n{incognito} : « Tiens tiens tiens... tu as triché ? Bah tiens chacal »")
+        print(f"\n{INCOGNITO} : « Tiens tiens tiens... tu as triché ? Bah tiens chacal »")
         wait_input()
 
         selected_weapons.append(CHEAT_WEAPON)
@@ -262,7 +256,7 @@ def launch_starters_scene(data):
 
     stop_sound(2000)
 
-    print(f"{incognito} : « Attention un fragment a été repéré ! »")
+    print(f"{INCOGNITO} : « Attention un fragment a été repéré ! »")
     wait_input()
 
 def launch_tuto_fight(player):
