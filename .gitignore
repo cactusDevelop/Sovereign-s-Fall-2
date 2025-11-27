@@ -2,5 +2,6 @@
 JSON/config.json
 JSON/active_data.json
 JSON/highscores.json
+JSON/debug.json
 
 __pycache__/
