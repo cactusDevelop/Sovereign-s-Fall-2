@@ -1,5 +1,4 @@
 {
-
   "game_cst": {
     "ult_coefficient": 4,
     "max_inv_size": 6,
@@ -38,7 +37,6 @@
     "cheat_code": "zahoe"
   },
   "monster_names": [
-    "Dimitri",
     "Le reuf de Dimitri",
     "La grd-mère de Dimitri",
     "Dimitri la Perdrix",
@@ -53,15 +51,17 @@
     "Thom-arabe",
     "Boegart Hangar",
     "Loulou Croix-V-Baton",
-    "Louis VII",
+    "Louis IVV",
     "Louis IIV"
   ],
   "boss_names": [
-    "Dimitri",
-    "Martini"
+    "Dimitro",
+    "Martini",
+    "Jérémyu",
+    "Flahsh"
   ],
   "weapon_names": [
-    "Tram Louise |8|",
+    "Tram Louise 8",
     "Tablette du Janson",
     "Caleçon Star Wars de Ken",
     "Caleçon Star Trek de Ken",
@@ -86,7 +86,8 @@
     "Tu sous-estimes le temps de prépa du prochain labo...",
     "Tu te demandes combien de temps le roi tiendra-t-il...",
     "Tu t'étonnes de la simplicité du cortex cérébrale de votre hôte",
-    "Tutedigire, tuteu rigides euh..."
+    "Tutedigire, tuteu rigides euh...",
+    "Tié un tigre !"
   ],
   "weaknesses": {
     "0": {
