@@ -115,7 +115,7 @@ def launch_cutscene(data):
         "                       ░                                                                                              ",
         "\n",
         RESET))
-    slow_print(title, max(random.gauss(0.2,0.06), 0))
+    typew_print(title, max(random.gauss(0.2, 0.06), 0))
     wait_input()
 
     clear_console()
@@ -125,7 +125,7 @@ def launch_cutscene(data):
         "Un homme tout de noir vêtu vous tend un parchemin.",
         f"\n{INCOGNITO} : « Complétez ceci »"))
     play_sound("paper-collect")
-    slow_print(center_txt((
+    typew_print(center_txt((
         " _________________________________________________________________ ",
         "|                                                                 |",
         "|                                                                 |",
@@ -134,7 +134,7 @@ def launch_cutscene(data):
         "|                                                                 |")), 0.05)
     wait_input()
     play_sound("paper-rustle")
-    slow_print(center_txt((
+    typew_print(center_txt((
         "|                                                                 |",
         "|   - Toute atteinte à la sécurité du participant durant le       |",
         "|   programme relève de son entière responsabilité.               |",
@@ -142,7 +142,7 @@ def launch_cutscene(data):
         "|   programme avant la fin.                                       |")), 0.05)
     wait_input()
     play_sound("paper-rustle")
-    slow_print(center_txt((
+    typew_print(center_txt((
         "|                                                                 |",
         "|   Je soussigné (nom, prénom)...............................     |",
         "|   accepte en toute connaissance de cause, les conditions        |",
@@ -323,7 +323,6 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
     if isinstance(fight_result, tuple):
         result, overkill = fight_result
     else:
-        result = fight_result
         overkill = 0
 
     if fight_result is True:

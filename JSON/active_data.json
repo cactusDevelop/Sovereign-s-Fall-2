@@ -1,33 +1,33 @@
 {
     "player": {
-        "nickname": "Joueur57",
-        "pv": 87,
-        "max_pv": 210,
+        "nickname": "AL",
+        "pv": 68,
+        "max_pv": 100,
         "stim": 0,
-        "max_stim": 322,
+        "max_stim": 200,
         "mana": 10,
         "max_mana": 10,
-        "score": 400,
-        "current_level": 6,
+        "score": 100,
+        "current_level": 1,
         "weapons_inv": {
             "weapon_slot_1": {
-                "name": "Yopy",
-                "power": 110,
-                "stim": 100,
-                "mana": 5,
-                "buff_count": 1
+                "name": "Osettyd",
+                "power": 60,
+                "stim": 90,
+                "mana": 4,
+                "buff_count": 0
             },
             "weapon_slot_2": {
-                "name": "Urla",
+                "name": "Trkqsna",
                 "power": 80,
                 "stim": 50,
                 "mana": 3,
                 "buff_count": 0
             },
             "weapon_slot_3": {
-                "name": "\u001b[1;93mAKLS\u001b[0m",
-                "power": 110,
-                "stim": 50,
+                "name": "Eaud",
+                "power": 80,
+                "stim": 60,
                 "mana": 4,
                 "buff_count": 0
             }
@@ -37,30 +37,10 @@
                 "name": "Sac des abîmes",
                 "effect": "new_obj",
                 "value": 0
-            },
-            "object_slot_2": {
-                "name": "P'tit bouclier",
-                "effect": "shield",
-                "value": 51
-            },
-            "object_slot_3": {
-                "name": "Buff instant",
-                "effect": "att_boost",
-                "value": 59
-            },
-            "object_slot_4": {
-                "name": "Petite popo de soin",
-                "effect": "heal",
-                "value": 76
             }
         }
     },
-    "used_monsters": [
-        "Le reuf de Dimitri",
-        "Loulou Croix-V-Baton",
-        "Louis IVV",
-        "La grd-mère de Dimitri"
-    ],
+    "used_monsters": [],
     "cheat": false,
-    "seed": 67
+    "seed": 13245
 }

@@ -31,7 +31,7 @@ class Fight:
 
             self.weakness_turns_remaining = max(self.weakness_turns_remaining - 1, 0)
 
-            p_turn_conclu = self.player_turn(max_inv_size)
+            p_turn_conclu, overkill = self.player_turn(max_inv_size)
             if p_turn_conclu == "Att":
                 play_sound("sword-sound")
             elif p_turn_conclu == "Obj":
@@ -46,13 +46,13 @@ class Fight:
                 continue
 
             gagne = self.check_end()
-            if gagne and p_turn_conclu == "Att":
+            if gagne and p_turn_conclu == "Att" and overkill:
                 stop_sound(FADE_OUT)
                 play_sound("sword-finish")
                 time.sleep(1)
                 play_sound("win")
                 wait_input()
-                return gagne
+                return gagne, overkill
             elif gagne and p_turn_conclu != "Att":
                 stop_sound(FADE_OUT)
                 play_sound("win")
@@ -81,7 +81,7 @@ class Fight:
             if self.player.mana < equiped_w.mana:
                 print(f"Mana insuffisant {self.player.mana}/{equiped_w.mana}")
                 wait_input()
-                return None
+                return None, None
 
             self.player.mana -= equiped_w.mana
 
@@ -92,7 +92,7 @@ class Fight:
             self.player.charge(self.player.weapon.stim)
 
             self.player.mana = min(self.player.mana + 1, self.player.max_mana)
-            return "Att"
+            return "Att", None
 
         elif instruction == "Objets":
             obj = self.player.inventory[value]
@@ -100,49 +100,49 @@ class Fight:
                 if self.player.mana < 3:
                     print("Mana insuffisant")
                     wait_input()
-                    return None
+                    return None, None
                 elif len(self.player.inventory) >= max_inv_size:
                     print("Inventaire plein")
                     wait_input()
-                    return None
+                    return None, None
 
             action_check = self.player.use_obj(value, max_inv_size, self.level)
             if action_check:
                 self.player.mana = min(self.player.mana + 1, self.player.max_mana)
-                return "Obj"
+                return "Obj", None
             else:
-                return None
+                return None, None
 
         elif instruction == "Analyse":
             if self.analysis_count <= 0:
                 print("T'as trop spam la passivité mon gars")
                 wait_input()
-                return None
+                return None, None
 
             self.analysis_count -= 1
 
             print(f"\nMeilleure compréhension : {self.find_weakness()}")
 
             self.player.mana = min(self.player.mana + 1, self.player.max_mana)
-            return "Ana"
+            return "Ana", None
 
         elif instruction == "Ultime":
             print("\nLa volonté des dieux vous accompagnent...")
             self.player.ult(self.enemy)
 
             self.player.mana = min(self.player.mana + 1, self.player.max_mana)
-            return "Ult"
+            return "Ult", None
 
         elif instruction == "Passer":
             print("\nImpuissant, vous passez votre tour")
             self.player.mana = min(self.player.mana + 1, self.player.max_mana)
-            return "Pass"
+            return "Pass", None
 
         elif instruction == "sus":
-            return "gameover2"
+            return "gameover2", None
 
         else:
-            return None
+            return None, None
 
 
     def enemy_turn(self):
@@ -152,10 +152,12 @@ class Fight:
         if random.random() < MISS_CHANCE or self.enemy.weapon.power == 0:
             play_sound("miss-swing")
             print(f""""{RED + self.enemy.name + RESET}" rate lamentablement son attaque""")
+
         elif random.random() < HEAL_CHANCE:
             self.enemy.pv = min(self.enemy.pv + int(self.enemy.max_pv*HEAL_AMOUNT), self.enemy.max_pv)
-            play_sound("bell")
+            play_sound("heal")
             print(f""""{RED + self.enemy.name + RESET}" se régène partiellement""")
+
         else:
             self.enemy.attack(self.player)
 
@@ -241,7 +243,7 @@ class Fight:
             return w_message
 
         elif w_type == "heal":
-            self.player.heal(w_value)
+            self.player.heal(self.player.pv*w_value//100)
             return w_message
 
         elif w_type == "defense":
@@ -362,7 +364,7 @@ class Fight:
 
             elif current_pos == "Info":
                 print("=" * 10 + "Vaincre des Fragmentus" + "=" * 10)
-                slow_print((
+                typew_print((
                     "\nA chaque tour, vous pouvez exécuter une action :",
                     "\n",
                     "\n  1. Attaquer avec une arme en payant du mana.",

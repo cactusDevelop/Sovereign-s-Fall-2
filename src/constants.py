@@ -15,6 +15,7 @@ WEAKNESSES = _CST_DATA.get("weaknesses", {})
 
 _GAME_CONSTANTS = _CST_DATA.get("game_cst", {})
 
+SCORE_MULT = _GAME_CONSTANTS.get("score_multiplier", 20)
 ULT_COEFFICIENT = _GAME_CONSTANTS.get("ult_coefficient", 4)
 MAX_INV_SIZE = _GAME_CONSTANTS.get("max_inv_size", 6)
 OBJECT_SCALE = _GAME_CONSTANTS.get("object_scale", 1.05)

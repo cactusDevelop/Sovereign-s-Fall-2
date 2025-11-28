@@ -47,7 +47,7 @@ from global_func import *
 from musics import play_sound, stop_sound
 from online_highscores import get_online_highscore, get_online_leaderboard
 from scenes import launch_cutscene, launch_starters_scene, launch_tuto_fight, game_over
-from constants import _HS, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, REV_YELLOW, RESET
+from constants import _HS, SCORE_MULT, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, REV_YELLOW, RESET
 
 
 # CACHER LES MESSAGES D'ERREUR IN FINE
@@ -60,8 +60,6 @@ class DevNull:
 sys.stderr = DevNull()"""
 
 
-def add_score(points:int):
-    data["player"]["score"] += points
 
 # MENU
 def display_menu():
@@ -159,8 +157,10 @@ def show_hs():  # [BALISE ONLINE HIGHSCORES]
 
     input("\nRetour >")
 
+def add_score(points:int):
+    data["player"]["score"] += points
 
-# CUTSCENE
+# RUN SCENES
 def run_intro():
     is_cheating = data.get("cheat", False)
 
@@ -218,7 +218,7 @@ def run_fight_loop():
             lvl, player, u_m, current_max_analysis, current_max_inv_size, current_max_weapon_slots)
 
         if fight_result:
-            add_score(20 * lvl)
+            add_score(SCORE_MULT * lvl)
             if overkill > 0:
                 add_score(int(overkill*OVERKILL_MULT))
 

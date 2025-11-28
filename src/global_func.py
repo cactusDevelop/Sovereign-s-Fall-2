@@ -13,7 +13,7 @@ def quick_print(txt: tuple):
         print(_, end="")
         wait_input()
 
-def slow_print(txt: tuple, delay: float):
+def typew_print(txt: tuple, delay: float):
     for l in txt:
         sys.stdout.write(l)
         sys.stdout.flush()

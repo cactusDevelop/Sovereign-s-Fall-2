@@ -1,5 +1,6 @@
 {
   "game_cst": {
+    "score_multiplier": 20,
     "ult_coefficient": 4,
     "max_inv_size": 6,
     "object_scale": 1.05,
@@ -98,15 +99,15 @@
     },
     "1": {
       "type": "attack",
-      "value": 10,
+      "value": 20,
       "duration": 3,
-      "message": "Ennemi affaibli (10% Att) pour 3 tours"
+      "message": "Ennemi affaibli (20% Att) pour 3 tours"
     },
     "2": {
       "type": "heal",
-      "value": 10,
+      "value": 15,
       "duration": 0,
-      "message": "Ennemi te guérit de 10 PV ?!"
+      "message": "Ennemi te guérit de 15% PV ?!"
     },
     "3": {
       "type": "attack",
