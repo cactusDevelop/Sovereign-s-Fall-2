@@ -47,7 +47,8 @@ from global_func import *
 from musics import play_sound, stop_sound
 from online_highscores import get_online_highscore, get_online_leaderboard
 from scenes import launch_cutscene, launch_starters_scene, launch_tuto_fight, game_over
-from constants import _HS, SCORE_MULT, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, REV_YELLOW, RESET
+from constants import (_HS, GAME_TITLE, SCORE_MULT, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS,
+                       CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, REV_YELLOW, RESET)
 
 
 # CACHER LES MESSAGES D'ERREUR IN FINE
@@ -160,6 +161,14 @@ def show_hs():  # [BALISE ONLINE HIGHSCORES]
 def add_score(points:int):
     data["player"]["score"] += points
 
+def set_terminal_title(title):
+    if os.name == "nt":
+        os.system(f"title {title}")
+    else:
+        sys.stdout.write(f"\033]0;{title}\007")
+        sys.stdout.flush()
+
+
 # RUN SCENES
 def run_intro():
     is_cheating = data.get("cheat", False)
@@ -232,6 +241,8 @@ def run_fight_loop():
 
 # GAME LOOP
 if __name__ == "__main__":
+    set_terminal_title(GAME_TITLE)
+
     running = True
     save_size()
 

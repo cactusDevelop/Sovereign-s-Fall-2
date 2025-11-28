@@ -55,13 +55,10 @@ def get_width():
     return columns
 
 def wait_input():
+    #print("|Appuyer pour continuer|")
     if os.name == "nt":
         try:
-            while True:
-                if msvcrt.kbhit():
-                    key = msvcrt.getch()
-                    if key in (b'\r',b'\n'):
-                        break
+            msvcrt.getch()
         except ImportError:
             input()
 

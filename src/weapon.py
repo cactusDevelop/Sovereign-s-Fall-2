@@ -1,7 +1,7 @@
 
 from random import shuffle, randint, gauss, choice
-from constants import (CLASSIC_N, OP_N, NUM_CLASSIC_STARTER, NUM_OP_STARTER,
-                       WEAPON_MIN_MANA, WEAPON_MAX_MANA, NAME_MIN_LETTER,
+from constants import (BASE_WEAPON, OP_BONUS, NUM_CLASSIC_STARTER, NUM_OP_STARTER,
+                       WEAPON_MIN_MANA, WEAPON_MAX_MANA, WEAPON_MANA_SCALE, NAME_MIN_LETTER,
                        NAME_MAX_LETTER, GEN_ATTEMPTS, ALPHABET, GOLD, RESET)
 
 starters_list = []
@@ -35,13 +35,12 @@ def rand_names():
     else:
         return "ISA-LIBUR"
 
-def rand_stats(x):
-    mana = randint(WEAPON_MIN_MANA,WEAPON_MAX_MANA)
-    power_ratio = gauss(0.5, 0.15)
-    power_value = int((x+mana)*power_ratio)
-    stim_value = x+mana-power_value
+def rand_stats(x:int):
+    mana = randint(WEAPON_MIN_MANA + x,WEAPON_MAX_MANA + x)
+    power_value = int((BASE_WEAPON/10 + mana) * gauss(0.5, 0.15))*10
+    stim_value = BASE_WEAPON + 10*mana - power_value
 
-    return [power_value*10, stim_value*10, mana]
+    return [power_value, stim_value, mana]
 
 def create_weapon(x:int):
     name = rand_names()
@@ -57,7 +56,7 @@ def create_weapon(x:int):
 
 def gen_boss_weapon(lvl):
     b_name = GOLD + rand_names().upper() + RESET
-    stats = rand_stats(10+(lvl//2))
+    stats = rand_stats(int(WEAPON_MANA_SCALE**lvl))
     return Weapon(b_name, stats[0], stats[1], stats[2], 0)
 
 def generate_starters():
@@ -66,7 +65,7 @@ def generate_starters():
 
     attempt = 0
     while len(starter_list) < NUM_CLASSIC_STARTER and GEN_ATTEMPTS > attempt :
-        weapon = create_weapon(CLASSIC_N)
+        weapon = create_weapon(0)
         stats_tuple = (weapon.power, weapon.stim, weapon.mana)
 
         if stats_tuple not in already_used_stats:
@@ -76,7 +75,7 @@ def generate_starters():
 
     attempt = 0
     while len(starter_list) < (NUM_CLASSIC_STARTER+NUM_OP_STARTER) and GEN_ATTEMPTS > attempt :
-        op_weapon = create_weapon(OP_N)
+        op_weapon = create_weapon(OP_BONUS)
         stats_tuple = (op_weapon.power, op_weapon.stim, op_weapon.mana)
 
         approved = True
@@ -97,9 +96,9 @@ def generate_starters():
 
     while len(starter_list) < (NUM_CLASSIC_STARTER + NUM_OP_STARTER):
         if len(starter_list) < NUM_CLASSIC_STARTER:
-            starter_list.append(create_weapon(CLASSIC_N))
+            starter_list.append(create_weapon(0))
         else:
-            starter_list.append(create_weapon(OP_N)) # Dernière chance
+            starter_list.append(create_weapon(OP_BONUS)) # Dernière chance
 
     shuffle(starter_list)
     return starter_list

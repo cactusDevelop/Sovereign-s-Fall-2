@@ -140,7 +140,6 @@ class OnlineHighscores:
 
             if response.status_code == 200:
                 self.last_sha = response.json()['content']['sha']
-                print(f"[SUCCESS] Score envoyé en ligne ! 🎉")
                 return True
             else:
                 print(f"[ERREUR] Envoi échoué: {response.status_code}")
@@ -192,7 +191,6 @@ def save_score_with_fallback(nickname, score, level, local_save_func):
     try:
         if save_online_score(nickname, score, level):
             online_success = True
-            print("✓ Score sauvegardé en ligne")
     except:
         pass
 

@@ -1,5 +1,6 @@
 {
   "game_cst": {
+    "title": "Sovereign's Fall 2",
     "score_multiplier": 20,
     "ult_coefficient": 4,
     "max_inv_size": 6,
@@ -26,12 +27,13 @@
     "boss_i_pv": 200,
     "boss_i_power": 15,
     "boss_scale": 1.19,
-    "classic_n": 10,
-    "op_n": 11,
+    "base_weapon": 100,
+    "op_bonus": 1,
     "num_classic_starter": 4,
     "num_op_starter": 1,
     "weapon_min_mana": 3,
     "weapon_max_mana": 5,
+    "weapon_mana_scale": 1.1,
     "name_min_letter": 4,
     "name_max_letter": 7,
     "gen_attempts": 111,

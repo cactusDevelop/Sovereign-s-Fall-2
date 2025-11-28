@@ -9,8 +9,10 @@ from object import Object, get_rand_obj
 from fight import Fight
 from global_func import *
 from online_highscores import save_score_with_fallback
-from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT, PLAYER_SCALE, PLAYER_ULT_SCALE, PLAYER_MANA_SCALE,
-                       MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE, BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, REV_WHITE, RED, GREEN, BLUE, CYAN, BOLD, RESET)
+from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT,
+                       PLAYER_SCALE, PLAYER_ULT_SCALE, PLAYER_MANA_SCALE, MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE,
+                       BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, REV_WHITE, REV_B_W, RED, GREEN,
+                       BLUE, CYAN, BOLD, RESET)
 
 OBJ_STARTER = Object("Sac des abîmes", "new_obj", 0)
 CHEAT_WEAPON = Weapon("Mange tes morts", 9999, 9999, 0, 0)
@@ -52,7 +54,7 @@ def game_over(data,x:int,des:str):
         test_high = (score == new_hs)
 
     print(f"\n{REV_WHITE}" + "=" * get_width())
-    print(f"{BOLD}  GAME OVER{REV_WHITE}" + " " * (get_width() - 11))
+    print(f"  {REV_B_W}GAME OVER{REV_WHITE}" + " " * (get_width() - 11))
     print(f"  Fin {x} - {des}" + " " * (get_width()-9-len(str(x))-len(des)))
     print(f"  Score - {score}" + " " * (get_width()-9-len(str(x))-len(str(score))))
     print(f"  Seed - {seed}" + " "*(get_width()-9-len(str(seed))))
@@ -323,11 +325,12 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
     if isinstance(fight_result, tuple):
         result, overkill = fight_result
     else:
+        result = fight_result
         overkill = 0
 
-    if fight_result is True:
+    if result is True:
         if is_bossfight:
-            max_analysis, max_inv_size, max_weapon_slots = offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots)
+            max_analysis, max_inv_size, max_weapon_slots = offer_upgrades(max_analysis, max_inv_size, max_weapon_slots)
 
             print("\nTu as battu un haut offier de l'espace mental Roi")
             print("Son arme a l'air forte...")
@@ -374,7 +377,7 @@ def launch_keep_fighting(difficulty, player, used_monsters, max_analysis=MAX_ANA
 
     return fight_result, overkill, max_analysis, max_inv_size, max_weapon_slots
 
-def offer_upgrades(player, max_analysis, max_inv_size, max_weapon_slots):
+def offer_upgrades(max_analysis, max_inv_size, max_weapon_slots):
     clear_console()
     play_sound("bell")
 

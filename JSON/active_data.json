@@ -1,46 +1,18 @@
 {
     "player": {
-        "nickname": "AL",
-        "pv": 68,
-        "max_pv": 100,
-        "stim": 0,
-        "max_stim": 200,
-        "mana": 10,
-        "max_mana": 10,
-        "score": 100,
-        "current_level": 1,
-        "weapons_inv": {
-            "weapon_slot_1": {
-                "name": "Osettyd",
-                "power": 60,
-                "stim": 90,
-                "mana": 4,
-                "buff_count": 0
-            },
-            "weapon_slot_2": {
-                "name": "Trkqsna",
-                "power": 80,
-                "stim": 50,
-                "mana": 3,
-                "buff_count": 0
-            },
-            "weapon_slot_3": {
-                "name": "Eaud",
-                "power": 80,
-                "stim": 60,
-                "mana": 4,
-                "buff_count": 0
-            }
-        },
-        "objects_inv": {
-            "object_slot_1": {
-                "name": "Sac des abîmes",
-                "effect": "new_obj",
-                "value": 0
-            }
-        }
+        "nickname": null,
+        "pv": null,
+        "max_pv": null,
+        "stim": null,
+        "max_stim": null,
+        "mana": null,
+        "max_mana": null,
+        "score": null,
+        "current_level": null,
+        "weapons_inv": {},
+        "objects_inv": {}
     },
     "used_monsters": [],
     "cheat": false,
-    "seed": 13245
+    "seed": null
 }

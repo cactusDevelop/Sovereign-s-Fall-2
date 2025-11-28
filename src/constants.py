@@ -15,6 +15,7 @@ WEAKNESSES = _CST_DATA.get("weaknesses", {})
 
 _GAME_CONSTANTS = _CST_DATA.get("game_cst", {})
 
+GAME_TITLE = _GAME_CONSTANTS.get("title", "Sovereign's Fall 2")
 SCORE_MULT = _GAME_CONSTANTS.get("score_multiplier", 20)
 ULT_COEFFICIENT = _GAME_CONSTANTS.get("ult_coefficient", 4)
 MAX_INV_SIZE = _GAME_CONSTANTS.get("max_inv_size", 6)
@@ -50,12 +51,13 @@ BOSS_I_POWER = _GAME_CONSTANTS.get("boss_i_power", 15)
 BOSS_SCALE = _GAME_CONSTANTS.get("boss_scale", 1.20)
 
 # WEAPONS
-CLASSIC_N = _GAME_CONSTANTS.get("classic_n", 10)
-OP_N = _GAME_CONSTANTS.get("op_n", 11)
+BASE_WEAPON = _GAME_CONSTANTS.get("base_weapon", 100)
+OP_BONUS = _GAME_CONSTANTS.get("op_bonus", 1)
 NUM_CLASSIC_STARTER = _GAME_CONSTANTS.get("num_classic_starter", 4)
 NUM_OP_STARTER = _GAME_CONSTANTS.get("num_op_starter", 1)
 WEAPON_MIN_MANA = _GAME_CONSTANTS.get("weapon_min_mana", 3)
 WEAPON_MAX_MANA = _GAME_CONSTANTS.get("weapon_max_mana", 5)
+WEAPON_MANA_SCALE = _GAME_CONSTANTS.get("weapon_mana_scale", 1.1)
 NAME_MIN_LETTER = _GAME_CONSTANTS.get("name_min_letter", 4)
 NAME_MAX_LETTER = _GAME_CONSTANTS.get("name_max_letter", 7)
 GEN_ATTEMPTS = _GAME_CONSTANTS.get("gen_attempts", 111)
@@ -68,15 +70,16 @@ ALPHABET = 'a' * 82 + 'b' * 10 + 'c' * 32 + 'd' * 37 + 'e' * 150 + 'f' * 11 + 'g
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"
 CYAN = "\033[1;36m"
-
-CHEAT_COLOR = "\033[42m"
-REV_YELLOW = "\033[33;7m"
-REV_WHITE = "\033[0;7m"
-
+GREY = "\033[90m"
 BLUE = "\033[1;94m"
 GOLD = "\033[1;93m"
 SILVER = "\033[1;38m"
 BRONZE = "\033[1;38;5;208m"
+
+CHEAT_COLOR = "\033[42m"
+REV_YELLOW = "\033[33;7m"
+REV_WHITE = "\033[0;7m"
+REV_B_W = "\033[1;7m"
 
 BOLD = "\033[1m"
 RESET = "\033[0m"

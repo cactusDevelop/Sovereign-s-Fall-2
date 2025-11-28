@@ -3,7 +3,8 @@ import random
 
 from global_func import *
 from musics import play_sound, stop_sound
-from constants import MAX_ANALYSIS, WEAKNESSES, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT, MAX_NAV_ITERATIONS, RED, BLUE, CYAN, GOLD, RESET
+from constants import (MAX_ANALYSIS, WEAKNESSES, MAX_INV_SIZE, FADE_OUT, MISS_CHANCE, HEAL_CHANCE, HEAL_AMOUNT,
+                       MAX_NAV_ITERATIONS, RED, BLUE, CYAN, GREY, GOLD, RESET)
 
 
 class Fight:
@@ -244,6 +245,8 @@ class Fight:
 
         elif w_type == "heal":
             self.player.heal(self.player.pv*w_value//100)
+            play_sound("heal")
+            print(f"L'ennemi vous guérit de {self.player.pv*w_value//100} PV ?!")
             return w_message
 
         elif w_type == "defense":
@@ -283,12 +286,29 @@ class Fight:
 
                     print("=" * 10 + "Menu" + "=" * 10)
                     for i, option in enumerate(nav_menu):
-                        if option == "Analyse":
-                            print(f"[{i + 1}] {option} ({self.analysis_count}/{self.max_analysis})")
-                        elif option == "Objets":
-                            print(f"[{i + 1}] {option} ({len(player.inventory)}/{max_inv_size})")
+                        is_disabled = False
+                        if option == "Armes" and not can_att:
+                            is_disabled = True
+                        elif option == "Objets" and not can_obj and not can_sac:
+                            is_disabled = True
+                        elif option == "Analyse" and not can_ana:
+                            is_disabled = True
+
+                        if is_disabled:
+                            if option == "Analyse":
+                                print(f"{GREY}[{i + 1}] {option} ({self.analysis_count}/{self.max_analysis}){RESET}")
+                            elif option == "Objets":
+                                print(f"{GREY}[{i + 1}] {option} ({len(player.inventory)}/{max_inv_size}){RESET}")
+                            else:
+                                print(f"{GREY}[{i + 1}] {option}{RESET}")
                         else:
-                            print(f"[{i+1}] {option}")
+                            if option == "Analyse":
+                                print(f"[{i + 1}] {option} ({self.analysis_count}/{self.max_analysis})")
+                            elif option == "Objets":
+                                print(f"[{i + 1}] {option} ({len(player.inventory)}/{max_inv_size})")
+                            else:
+                                print(f"[{i + 1}] {option}")
+
                 def conf(action_input):
                     return action_input.isdigit() and 0 < int(action_input) <= len(nav_menu)
 
