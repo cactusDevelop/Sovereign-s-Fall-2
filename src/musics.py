@@ -10,6 +10,7 @@ SFX issus de Pixabay
 import os, random, pygame
 
 from constants import CHANNEL_NUMBER
+from settings import sound_enabled
 
 
 pygame.mixer.init()
@@ -17,6 +18,9 @@ pygame.mixer.set_num_channels(CHANNEL_NUMBER)
 
 
 def play_sound(which, is_bg=False):
+    if not sound_enabled():
+        return
+
     variantes = []
 
     if is_bg:

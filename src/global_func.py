@@ -1,6 +1,8 @@
 
 import os, sys, time, msvcrt, json
 
+from settings import animations_enabled, get_typew_speed
+
 
 def clear_console():
     if os.name == "nt":
@@ -13,12 +15,19 @@ def quick_print(txt: tuple):
         print(_, end="")
         wait_input()
 
-def typew_print(txt: tuple, delay: float):
+def typew_print(txt: tuple):
+    if not animations_enabled():
+        for l in txt:
+            print(l, end="")
+        print()
+        return
+
+    delay = get_typew_speed()
+
     for l in txt:
         sys.stdout.write(l)
         sys.stdout.flush()
         time.sleep(delay)
-        #Ajouter un sfx typewriting ?
     print()
 
 def solid_input(conf, to_display):

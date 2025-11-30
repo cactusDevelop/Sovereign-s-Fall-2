@@ -117,7 +117,7 @@ def launch_cutscene(data):
         "                       ░                                                                                              ",
         "\n",
         RESET))
-    typew_print(title, max(random.gauss(0.2, 0.06), 0))
+    typew_print(title)
     wait_input()
 
     clear_console()
@@ -133,7 +133,7 @@ def launch_cutscene(data):
         "|                                                                 |",
         "|   Vous avez eu l’exceptionnellement incroyable chance           |",
         "|   d’être sélectionné pour prendre part au programme *XXXXX*.    |",
-        "|                                                                 |")), 0.05)
+        "|                                                                 |")))
     wait_input()
     play_sound("paper-rustle")
     typew_print(center_txt((
@@ -141,7 +141,7 @@ def launch_cutscene(data):
         "|   - Toute atteinte à la sécurité du participant durant le       |",
         "|   programme relève de son entière responsabilité.               |",
         "|   - Le participant n’est pas autorisé à interrompre le          |",
-        "|   programme avant la fin.                                       |")), 0.05)
+        "|   programme avant la fin.                                       |")))
     wait_input()
     play_sound("paper-rustle")
     typew_print(center_txt((
@@ -150,7 +150,7 @@ def launch_cutscene(data):
         "|   accepte en toute connaissance de cause, les conditions        |",
         "|   présentées cfr supra.                                         |",
         "|                                                                 |",
-        "|_________________________________________________________________|")), 0.05)
+        "|_________________________________________________________________|")))
 
     print(f"\n{INCOGNITO} : « Avez-vous lu et accepté ce contrat » ")
 

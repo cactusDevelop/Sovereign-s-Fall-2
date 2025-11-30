@@ -116,7 +116,7 @@ class Fight:
 
         elif instruction == "Analyse":
             if self.analysis_count <= 0:
-                print("T'as trop spam la passivité mon gars")
+                print("[DEBUG] Mana insuffisant déjà annoncé")
                 wait_input()
                 return None, None
 
@@ -200,15 +200,21 @@ class Fight:
                 pv_bar += "_"
 
         line_0 = f"\n NIVEAU {self.level}"
+
         line_1 = "=" * 5 + f"| {CYAN}" + self.player.name + "'s turn" + f"{RESET} |" + "=" * (get_width() - 16 - len(self.player.name))
+
         line_2 = " " * left_offset + CYAN + self.player.name.upper() + RESET + " " * (get_width() // 2 - len(self.player.name))
         line_2 += RED + "FRAGMENTUS " + self.enemy.name.upper() + RESET
+
         line_3 = " "*left_offset + pv_bar + " | " + str(self.player.pv) + "/" + str(self.player.max_pv) +" PV"
         if self.player.shield_pv > 0:
             line_3 += f" [Bouclier {self.player.shield_pv}PV]"
-        line_3 += " "*(get_width()//2-len(line_3)+left_offset)
+        visible_length = len(line_3) - line_3.count(BLUE) * len(BLUE) - line_3.count(RESET) * len(RESET)
+        line_3 += " " * (get_width()//2 - visible_length + left_offset)
         line_3 += "█"*e_pv_ratio + "_"*(10-e_pv_ratio) + " | " + str(self.enemy.pv) + "/" + str(self.enemy.max_pv) +" PV"
+
         line_4 = " "*left_offset + "█"*p_stim_ratio + "_"*(10-p_stim_ratio) + " | " + str(self.player.stim) + "/" + str(self.player.max_stim) +" ULT"
+
         line_5 = " "*left_offset + "█"*p_mana_ratio + "_"*(10-p_mana_ratio) + " | " + str(self.player.mana) + "/" + str(self.player.max_mana) +" MANA"
 
         print(line_0)
@@ -278,7 +284,9 @@ class Fight:
         current_pos = "Nav"
 
         for it in range(MAX_NAV_ITERATIONS):
-            clear_console()
+
+            if current_pos not in ["Analyse", "Ultime", "Passer"]:
+                clear_console()
 
             if current_pos == "Nav":
                 def to_display():
@@ -312,8 +320,23 @@ class Fight:
                 def conf(action_input):
                     return action_input.isdigit() and 0 < int(action_input) <= len(nav_menu)
 
-                action = int(solid_input(conf,to_display))-1
-                current_pos = nav_menu[action]
+                action = int(solid_input(conf,to_display)) - 1
+                selected_option = nav_menu[action]
+
+                if selected_option == "Armes" and not can_att:
+                    print("Aucune arme utilisable")
+                    wait_input()
+                    continue
+                elif selected_option == "Objets" and not can_obj and not can_sac:
+                    print("Aucun objet utilisable")
+                    wait_input()
+                    continue
+                elif selected_option == "Analyse" and not can_ana:
+                    print("T'as trop spam la passivité mon gars")
+                    wait_input()
+                    continue
+
+                current_pos = selected_option
 
             elif current_pos == "Armes":
                 def to_display():
@@ -325,12 +348,21 @@ class Fight:
                     for i, option in enumerate(player.weapons):
                         clean_name = option.name.replace(GOLD, '').replace(RESET, '')
                         offset = " " * (max_len + 2 - len(clean_name))
+
+                        enough_mana = player.mana >= option.mana
+
                         if GOLD in option.name:
                             display_name = f"{GOLD}{clean_name}{RESET}"
+                        elif not enough_mana:
+                            display_name = f"{GREY}{clean_name}{RESET}"
                         else:
                             display_name = clean_name
-                        print(
-                            f"[{i + 1}] {display_name}{offset}(Att:{option.power}, Ult:{option.stim}, Mana:{option.mana})")
+
+                        display_stats = f"(Att:{option.power}, Ult:{option.stim}, Mana:{option.mana})"
+                        if not enough_mana:
+                            display_stats = f"{GREY}{display_stats}{RESET}"
+
+                        print(f"[{i + 1}] {display_name + offset + display_stats}")
                     print(f"[{len(player.weapons) + 1}] Retour")
                 def conf(action_input):
                     return action_input.isdigit() and 0 < int(action_input) <= len(player.weapons)+1
@@ -339,6 +371,10 @@ class Fight:
 
                 if action == len(player.weapons):
                     current_pos = "Nav"
+                elif player.mana < player.weapons[action].mana:
+                    print(f"Mana insuffisant ({player.mana}/{player.weapons[action].mana})")
+                    wait_input()
+                    return "Armes", action
                 else:
                     return "Armes", action
 
@@ -412,7 +448,7 @@ class Fight:
                     "\n",
                     "\n  5. Passer",
                     "\n     Dans le cas très rare où aucune autre action n'est possible... passez."
-                ),0.1)
+                ))
 
                 wait_input()
                 current_pos = "Nav"

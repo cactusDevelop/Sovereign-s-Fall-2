@@ -4,6 +4,7 @@ import os, time
 from global_func import get_width, clear_console
 from musics import play_sound
 from constants import ULT_COEFFICIENT, RED, CYAN, RESET
+from settings import animations_enabled
 
 
 class Character:
@@ -29,6 +30,10 @@ class Character:
 
 def show_ult_animation():
     play_sound("sword-combo")
+
+    if not animations_enabled():
+        print("\n *** ULTIME ***")
+        return
 
     if not os.path.exists("ascii-frames.txt"):
         print("[Animation non disponible]")

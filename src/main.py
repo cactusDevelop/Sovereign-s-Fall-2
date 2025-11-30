@@ -49,6 +49,7 @@ from online_highscores import get_online_highscore, get_online_leaderboard
 from scenes import launch_cutscene, launch_starters_scene, launch_tuto_fight, game_over
 from constants import (_HS, GAME_TITLE, SCORE_MULT, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS,
                        CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, REV_YELLOW, RESET)
+from settings import load_settings, save_settings, refresh_settings
 
 
 # CACHER LES MESSAGES D'ERREUR IN FINE
@@ -59,7 +60,6 @@ class DevNull:
         pass
 
 sys.stderr = DevNull()"""
-
 
 
 # MENU
@@ -92,10 +92,11 @@ def display_menu():
         print(f" [2] Charger Une Partie")
         print(" [3] Classement")
         print(" [4] Seeded run")
+        print(" [5] Paramètres")
         print(" [0] Quitter :‹")
 
     def conf_m(action_input):
-        return action_input.lower() in ["0", "1", "2", "3", "4", CHEAT_CODE]
+        return action_input.lower() in ["0", "1", "2", "3", "4", "5", CHEAT_CODE]
 
     clear_console()
     direc = solid_input(conf_m, to_display_m)
@@ -112,7 +113,6 @@ def display_menu():
         return 1
 
     return int(direc)
-
 
 def show_hs():  # [BALISE ONLINE HIGHSCORES]
     print("\n" + "=" * 5 + f"| {BOLD}ALL TIME TOP 10{RESET} |" + "=" * (get_width() - 24))
@@ -294,4 +294,46 @@ if __name__ == "__main__":
                 run_intro()
             else:
                 continue
-                
+
+        elif menu_to == 5:
+            settings = load_settings()
+
+            while True:
+                def to_display_s():
+                    clear_console()
+                    print("\n" + "=" * 5 + f"| {BOLD}PARAMÈTRES{RESET} |" + "=" * (get_width() - 19))
+                    print(f"\n [1] Animations: {'ON' if settings['animations_enabled'] else 'OFF'}")
+                    print(f" [2] Sons: {'ON' if settings['sound_enabled'] else 'OFF'}")
+                    print(f" [3] Vitesse texte: {settings['typew_speed']:.2f}s")
+                    print(" [0] Retour")
+
+
+                def conf_s(action_input):
+                    return action_input in ["0", "1", "2", "3"]
+
+
+                choice = solid_input(conf_s, to_display_s)
+
+                if choice == "0":
+                    save_settings(settings)
+                    refresh_settings()
+                    break
+                elif choice == "1":
+                    settings['animations_enabled'] = not settings['animations_enabled']
+                elif choice == "2":
+                    settings['sound_enabled'] = not settings['sound_enabled']
+                elif choice == "3":
+                    def to_display_speed():
+                        print("\nVitesse du texte (0.01 à 0.5, actuellement {:.2f})".format(settings['typew_speed']))
+
+
+                    def conf_speed(x):
+                        try:
+                            val = float(x)
+                            return 0.01 <= val <= 0.5
+                        except:
+                            return False
+
+
+                    speed = float(solid_input(conf_speed, to_display_speed))
+                    settings['typew_speed'] = speed
