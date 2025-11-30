@@ -124,8 +124,10 @@ def launch_cutscene(data):
     play_sound("wood-creak")
     quick_print((
         "\nVous vous réveillez dans un pièce sombre qui vous est inconnue.",
-        "Un homme tout de noir vêtu vous tend un parchemin.",
-        f"\n{INCOGNITO} : « Complétez ceci »"))
+        "\nUn homme tout de noir vêtu vous tend un parchemin.",
+        f"\n\n{INCOGNITO} : « Complétez ceci »"))
+
+    print()
     play_sound("paper-collect")
     typew_print(center_txt((
         " _________________________________________________________________ ",
@@ -184,9 +186,10 @@ def launch_cutscene(data):
 
         quick_print((
             f"\n{RESET}Il vous voile les yeux de force. Vous entendez le claquement sourd d'une porte métallique.",
-            "Une nausée commence à vous prendre... Votre tête brule... Vos tympans bourdonnent...",
-            "Vous vous sentez tel un Ampèremètre branché en parallèle...",
-            "Et vous perdez connaissance."))
+            "\nUne nausée commence à vous prendre... Votre tête brule... Vos tympans bourdonnent...",
+            "\nVous vous sentez tel un Ampèremètre branché en parallèle...",
+            "\nEt vous perdez connaissance."))
+        print()
         print("...")
         play_sound("teleport")
         time.sleep(1)
@@ -201,21 +204,21 @@ def launch_starters_scene(data):
 
     quick_print((
                 f"\n {CYAN + nickname + RESET} : « ... Qu’est-ce que... Où suis-je tombé ? »",
-                "\nDevant vous, se trouvent plusieurs armes difformes éparpillées sur le sol.",
-                f"\n{INCOGNITO} : « Bienvenue dans la tête du Roi, agent {nickname} »",
-                f"{INCOGNITO} : « Votre objectif sera de le {RED}TuER{RESET} »",
-                f"{INCOGNITO} : « Pour ce faire, détruisez les fragments de son esprit que vous rencontrerez »",
-                f"{INCOGNITO} : « Choisissez une arme. »"))
+                "\n\nDevant vous, se trouvent plusieurs armes difformes éparpillées sur le sol.",
+                f"\n\n{INCOGNITO} : « Bienvenue dans la tête du Roi, agent {nickname} »",
+                f"\n{INCOGNITO} : « Votre objectif sera de le {RED}TuER{RESET} »",
+                f"\n{INCOGNITO} : « Pour ce faire, détruisez les fragments de son esprit que vous rencontrerez »",
+                f"\n{INCOGNITO} : « Choisissez une arme. »"))
 
-    print()
+    print("\n")
     weapon_slot_1 = choose_starter(starters)
     starters.remove(weapon_slot_1)
     play_sound("bell")
 
     quick_print((f"\n{INCOGNITO} : « Ah, j'ai oublié de préciser que vous pourrez faire une attaque combinée... »",
-                f"{INCOGNITO} : « Donc vous aurez besoin de deux autres armes supplémentaires. »"))
+                f"\n{INCOGNITO} : « Donc vous aurez besoin de deux autres armes supplémentaires. »"))
 
-    print("\n <2e arme>")
+    print("\n\n <2e arme>")
     weapon_slot_2 = choose_starter(starters)
     starters.remove(weapon_slot_2)
     play_sound("bell")
@@ -226,7 +229,7 @@ def launch_starters_scene(data):
     play_sound("bell")
 
     quick_print((f"\n{INCOGNITO} : « Je te donne un dernier objet : un sac dans lequel tu devras mettre tes trouvailles »",
-               f"{INCOGNITO} : « Tu n'es pas le premier à t'en servir c'est pour ça qu'il y a quelques déchets dedans »"))
+               f"\n{INCOGNITO} : « Tu n'es pas le premier à t'en servir c'est pour ça qu'il y a quelques déchets dedans »"))
     play_sound("bell")
     data["player"]["objects_inv"] =  {"object_slot_1":{"name": OBJ_STARTER.name, "effect": OBJ_STARTER.effect, "value": OBJ_STARTER.value}}
 
@@ -258,7 +261,7 @@ def launch_starters_scene(data):
 
     stop_sound(2000)
 
-    print(f"{INCOGNITO} : « Attention un fragment a été repéré ! »")
+    print(f"\n{INCOGNITO} : « Attention un fragment a été repéré ! »")
     wait_input()
 
 def launch_tuto_fight(player):

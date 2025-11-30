@@ -1,12 +1,4 @@
 
-# TOUTES LES MUSIQUES SONT COPYRIGHT FREE A CE JOUR, JE M'ENGAGE A IMMEDIATEMENT LES RETIRER SI J'APPRENDS QUE LES DROITS DEVIENNENT PROTEGES
-"""
-Horror Tense Music (Tunetank)
-Password Infinity (Evgeny_Bardyuzha)
-Musiques de combat par Panda Beats
-SFX issus de Pixabay
-"""
-
 import os, random, pygame
 
 from constants import CHANNEL_NUMBER
