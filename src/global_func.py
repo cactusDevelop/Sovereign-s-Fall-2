@@ -73,8 +73,6 @@ def wait_input():
 
     else:
         input() # Déso aux sys d'exploitation Linux et IOS
-    print()
-
 
 def center_txt(txt:tuple):
     centered = []
