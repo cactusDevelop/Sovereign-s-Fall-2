@@ -1,14 +1,14 @@
 {
     "player": {
         "nickname": "testeur",
-        "pv": 100,
-        "max_pv": 100,
-        "stim": 0,
-        "max_stim": 200,
+        "pv": 104,
+        "max_pv": 115,
+        "stim": 30,
+        "max_stim": 220,
         "mana": 10,
         "max_mana": 10,
-        "score": 100,
-        "current_level": 1,
+        "score": 260,
+        "current_level": 2,
         "weapons_inv": {
             "weapon_slot_1": {
                 "name": "Eodtss",
@@ -37,10 +37,17 @@
                 "name": "Sac des abîmes",
                 "effect": "new_obj",
                 "value": 0
+            },
+            "object_slot_2": {
+                "name": "Vol-au-vent",
+                "effect": "mana_ult_charge",
+                "value": 2
             }
         }
     },
-    "used_monsters": [],
+    "used_monsters": [
+        "La grd-mère de Dimitri"
+    ],
     "cheat": false,
     "seed": 1690634
 }

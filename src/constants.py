@@ -15,7 +15,7 @@ WEAKNESSES = _CST_DATA.get("weaknesses", {})
 _GAME_CONSTANTS = _CST_DATA.get("game_cst", {})
 
 for key, value in _GAME_CONSTANTS.items():
-    globals()[key] = value
+    globals()[key.upper()] = value
 
 # PYTHON CST
 INCOGNITO = " \033[1;32m???\033[0m"

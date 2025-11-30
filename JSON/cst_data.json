@@ -1,7 +1,6 @@
 {
   "game_cst": {
-    "title": "Sovereign's Fall 2",
-    "score_multiplier": 20,
+    "game_title": "Sovereign's Fall 2",
     "ult_coefficient": 4,
     "max_inv_size": 6,
     "object_scale": 1.05,
@@ -37,7 +36,8 @@
     "name_min_letter": 4,
     "name_max_letter": 7,
     "gen_attempts": 111,
-    "overkill_multiplier": 2,
+    "score_mult": 20,
+    "overkill_mult": 2,
     "channel_number": 10,
     "cheat_code": "zahoe"
   },
