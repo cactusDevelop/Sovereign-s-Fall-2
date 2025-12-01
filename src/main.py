@@ -45,7 +45,7 @@ import pygame, random
 from json_manager import *
 from global_func import *
 from musics import play_sound, stop_sound
-from online_highscores import get_online_highscore, get_online_leaderboard
+from firebase_hs import get_online_highscore, get_online_leaderboard
 from scenes import launch_cutscene, launch_starters_scene, launch_tuto_fight, game_over
 from constants import (_HS, GAME_TITLE, SCORE_MULT, OVERKILL_MULT, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS,
                        CHEAT_CODE, CHEAT_COLOR, GOLD, SILVER, BRONZE, BOLD, REV_YELLOW, RESET)
@@ -322,6 +322,10 @@ if __name__ == "__main__":
                     settings['animations_enabled'] = not settings['animations_enabled']
                 elif choice == "2":
                     settings['sound_enabled'] = not settings['sound_enabled']
+                    if not settings['sound_enabled']:
+                        pygame.mixer.music.set_volume(0)
+                    else:
+                        pygame.mixer.music.set_volume(1)
                 elif choice == "3":
                     def to_display_speed():
                         print("\nVitesse du texte (0.01 à 0.5, actuellement {:.2f})".format(settings['typew_speed']))

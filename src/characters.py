@@ -5,6 +5,7 @@ from global_func import get_width, clear_console
 from musics import play_sound
 from constants import ULT_COEFFICIENT, RED, CYAN, RESET
 from settings import animations_enabled
+from deltatime import get_timer
 
 
 class Character:
@@ -50,15 +51,17 @@ def show_ult_animation():
         except OSError:
             max_height = 24
 
-        for frame in frames:
+        timer = get_timer()
+        timer.reset()
 
+        for frame in frames:
             lines = frame.split('\n')
             lines_to_display = lines[:max_height]
 
             for line in lines_to_display:
                 print(line[:get_width() - 2])
 
-            time.sleep(0.05)
+            timer.wait_for_next_frame()
             clear_console()
 
     except Exception as e:

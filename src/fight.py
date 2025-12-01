@@ -80,8 +80,6 @@ class Fight:
             self.player.weapon = equiped_w
 
             if self.player.mana < equiped_w.mana:
-                print(f"Mana insuffisant {self.player.mana}/{equiped_w.mana}")
-                wait_input()
                 return None, None
 
             self.player.mana -= equiped_w.mana

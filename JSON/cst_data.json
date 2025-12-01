@@ -39,6 +39,8 @@
     "score_mult": 20,
     "overkill_mult": 2,
     "channel_number": 10,
+    "BG_VOLUME": 0.15,
+    "SFX_VOLUME": 1,
     "cheat_code": "zahoe"
   },
   "monster_names": [

@@ -8,7 +8,7 @@ from characters import Monster
 from object import Object, get_rand_obj
 from fight import Fight
 from global_func import *
-from online_highscores import save_score_with_fallback
+from firebase_hs import save_score_with_fallback
 from constants import (INCOGNITO, MAX_ANALYSIS, MAX_INV_SIZE, MAX_WEAPON_SLOTS, PLAYER_I_PV, PLAYER_I_MANA, PLAYER_I_ULT,
                        PLAYER_SCALE, PLAYER_ULT_SCALE, PLAYER_MANA_SCALE, MONSTER_I_PV, MONSTER_I_POWER, MONSTER_SCALE,
                        BOSS_I_PV, BOSS_I_POWER, BOSS_SCALE, RANDOM_LINES, WEAKNESSES, REV_WHITE, REV_B_W, RED, GREEN,
