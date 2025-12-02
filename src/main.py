@@ -254,12 +254,14 @@ if __name__ == "__main__":
             stop_sound(1500)
             time.sleep(1.7)
             running = False
+
         if menu_to == 1:
             data["cheat"] = False
             data["seed"] = None
             with open("JSON/active_data.json", "w", encoding="utf-8") as write_file:
                 json.dump(data, write_file, indent=4, ensure_ascii=False)
             run_intro()
+
         elif menu_to == 2:
             if not saved_game():
                 input("\nAucune partie sauvegardée... ¯\_(ツ)_/¯")
@@ -268,10 +270,12 @@ if __name__ == "__main__":
             print("Let's go ! > ", end="")
             wait_input()
             run_fight_loop()
+
         elif menu_to == 3:
             clear_console()
             print()
             show_hs()
+
         elif menu_to == 4:
             clear_console()
             def to_display():
@@ -304,12 +308,11 @@ if __name__ == "__main__":
                     print("\n" + "=" * 5 + f"| {BOLD}PARAMÈTRES{RESET} |" + "=" * (get_width() - 19))
                     print(f"\n [1] Animations: {'ON' if settings['animations_enabled'] else 'OFF'}")
                     print(f" [2] Sons: {'ON' if settings['sound_enabled'] else 'OFF'}")
-                    print(f" [3] Vitesse texte: {settings['typew_speed']:.2f}s")
                     print(" [0] Retour")
 
 
                 def conf_s(action_input):
-                    return action_input in ["0", "1", "2", "3"]
+                    return action_input in ["0", "1", "2"]
 
 
                 choice = solid_input(conf_s, to_display_s)
@@ -326,18 +329,3 @@ if __name__ == "__main__":
                         pygame.mixer.music.set_volume(0)
                     else:
                         pygame.mixer.music.set_volume(1)
-                elif choice == "3":
-                    def to_display_speed():
-                        print("\nVitesse du texte (0.01 à 0.5, actuellement {:.2f})".format(settings['typew_speed']))
-
-
-                    def conf_speed(x):
-                        try:
-                            val = float(x)
-                            return 0.01 <= val <= 0.5
-                        except:
-                            return False
-
-
-                    speed = float(solid_input(conf_speed, to_display_speed))
-                    settings['typew_speed'] = speed

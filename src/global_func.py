@@ -1,7 +1,8 @@
 
 import os, sys, time, msvcrt, json
 
-from settings import animations_enabled, get_typew_speed
+from settings import animations_enabled
+from constants import ANIM_FPS
 
 
 def clear_console():
@@ -22,7 +23,7 @@ def typew_print(txt: tuple):
         print()
         return
 
-    delay = get_typew_speed()
+    delay = ANIM_FPS
 
     for l in txt:
         sys.stdout.write(l)

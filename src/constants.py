@@ -82,3 +82,4 @@ CHANNEL_NUMBER: int
 BG_VOLUME: float
 SFX_VOLUME: float
 CHEAT_CODE: str
+ANIM_FPS: float

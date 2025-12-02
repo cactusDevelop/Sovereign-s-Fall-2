@@ -5,7 +5,6 @@ import json, os
 DEFAULT_SETTINGS = {
     "animations_enabled": True,
     "sound_enabled": True,
-    "typew_speed": 0.1
 }
 
 def load_settings():
@@ -49,9 +48,6 @@ def animations_enabled():
 
 def sound_enabled():
     return _current_settings.get("sound_enabled", True)
-
-def get_typew_speed():
-    return _current_settings.get("typew_speed", 0.1)
 
 def refresh_settings():
     global _current_settings

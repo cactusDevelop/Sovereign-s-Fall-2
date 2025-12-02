@@ -41,7 +41,8 @@
     "channel_number": 10,
     "BG_VOLUME": 0.15,
     "SFX_VOLUME": 1,
-    "cheat_code": "zahoe"
+    "cheat_code": "zahoe",
+    "anim_fps": 0.15
   },
   "monster_names": [
     "Le reuf de Dimitri",

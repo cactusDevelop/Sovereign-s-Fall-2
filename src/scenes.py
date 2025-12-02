@@ -102,6 +102,7 @@ def launch_cutscene(data):
     play_sound("intro")
     title = center_txt((
         f"{BLUE}\n",
+        "\n\n\n\n\n\n\n\n",
         "\n",
         "\n",
         "\n",
